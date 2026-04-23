@@ -1,0 +1,126 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* 0.9 = suave, 1.2 = recomendado, 1.35 = marcado */
+  --card-hover-strength: 1.2;
+  --card-hover-lift: calc(7px * var(--card-hover-strength));
+  --card-hover-shadow-y: calc(34px * var(--card-hover-strength));
+  --card-hover-shadow-blur: calc(70px * var(--card-hover-strength));
+  --card-hover-shadow-spread: calc(-16px + ((var(--card-hover-strength) - 1) * 2px));
+  --card-hover-scale: 1.008;
+}
+
+@layer base {
+  body {
+    @apply selection:bg-ink selection:text-white;
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-7xl px-6 sm:px-10 lg:px-12;
+  }
+
+  .glass {
+    @apply bg-white/80 backdrop-blur-xl border border-white/60 shadow-premium;
+  }
+
+  .section-space {
+    @apply py-20 sm:py-28 lg:py-36 relative;
+  }
+
+  .premium-card {
+    @apply transition-all duration-300 ease-in-out;
+    will-change: transform, box-shadow, border-color;
+  }
+
+  .premium-card-icon {
+    @apply transition-all duration-300 ease-in-out;
+    will-change: transform, color, background-color;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .premium-card:hover {
+    transform: translateY(calc(-1 * var(--card-hover-lift))) scale(var(--card-hover-scale));
+    border-color: rgba(100, 181, 173, 0.3);
+    box-shadow:
+      0 var(--card-hover-shadow-y) var(--card-hover-shadow-blur) var(--card-hover-shadow-spread) rgba(15, 23, 32, 0.24),
+      0 0 0 1px rgba(100, 181, 173, 0.24);
+  }
+
+  .premium-card:hover .premium-card-icon {
+    transform: scale(1.05);
+  }
+}
+
+/* Custom backgrounds and patterns */
+.bg-hero-radial {
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(40, 40, 41, 0.03), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(40, 40, 41, 0.02), transparent 40%),
+    linear-gradient(to bottom, #ffffff, #f9f9f9);
+}
+
+.consultorio-facade-card {
+  background-color: transparent;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0.78)),
+    url("/Consultorio_1.webp");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.about-facade-panel {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.34)),
+    url("/Consultorio_1.webp");
+  background-position: center 38%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.about-facade-panel-secondary {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.42)),
+    url("/Consultorio_2.webp");
+  background-position: center 55%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* Scroll reveal helpers */
+.scroll-reveal {
+  @apply opacity-0 translate-y-8 transition-all duration-1000 ease-out;
+}
+
+.scroll-reveal-active {
+  @apply opacity-100 translate-y-0;
+}
+
+.transition-smooth {
+  @apply transition-all duration-500;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Editorial Dividers */
+.divider-h {
+  @apply h-[1px] w-full bg-ink/5;
+}
+
+.divider-v {
+  @apply w-[1px] h-full bg-ink/5;
+}
+
+/* Subtle Scroll Animations */
+.reveal-on-scroll {
+  @apply opacity-0 translate-y-4 transition-all duration-1000 ease-out;
+}
+
+.reveal-active {
+  @apply opacity-100 translate-y-0;
+}
+

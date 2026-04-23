@@ -1,0 +1,136 @@
+Quiero que me ayudes a desarrollar una página web moderna y dinámica para un centro odontológico llamado “Onofri & Difulvio”.
+
+IMPORTANTE SOBRE EL ESTILO:
+- La web NO debe verse estática ni clásica.
+- No quiero un diseño tipo clínica tradicional como este ejemplo de lo que NO gusta: https://platinumfamilydental.com/
+- Quiero algo más dinámico, visual, moderno, original y con mejor experiencia de usuario, más en la línea de este estilo: https://zeatravel.com/
+- La idea es que transmita profesionalismo, modernidad, cercanía y confianza.
+- Debe tener animaciones suaves, buena estética, secciones atractivas y una navegación fluida.
+- Tiene que verse muy bien tanto en desktop como en mobile.
+
+OBJETIVO DE LA WEB:
+La página debe servir para:
+1. Promocionar el centro odontológico
+2. Presentar quiénes son los profesionales
+3. Mostrar qué especialidades atiende cada uno
+4. Brindar información sobre el consultorio
+5. Captar posibles pacientes
+6. Permitir que los pacientes completen un formulario de solicitud de turno
+7. Registrar información para estadísticas y seguimiento
+
+INFORMACIÓN GENERAL DEL NEGOCIO:
+- Nombre del centro: Onofri & Difulvio
+- Son dos odontólogos dueños del centro
+- Quieren una presencia web moderna y diferencial
+- Ya cuentan con Google Ads, por lo que la web debería estar preparada para medición y conversiones
+
+SECCIONES QUE DEBERÍA TENER LA WEB:
+1. Home / portada
+   - Hero principal impactante
+   - Mensaje de valor del centro odontológico
+   - Diseño visual fuerte
+   - Llamados a la acción claros, por ejemplo:
+     - “Solicitar turno”
+     - “Conocé a los profesionales”
+     - “Contactanos”
+
+2. Sobre nosotros
+   - Presentación del consultorio
+   - Quiénes son
+   - Filosofía de trabajo
+   - Enfoque profesional y humano
+
+3. Profesionales
+   - Perfil de cada odontólogo
+   - Nombre, foto, descripción breve
+   - Especialidades de cada uno
+   - Diferenciar claramente qué atiende cada profesional
+
+4. Especialidades / servicios
+   - Listado de tratamientos o especialidades
+   - Debe quedar claro qué profesional atiende cada tipo de consulta
+
+5. El consultorio
+   - Información general del lugar
+   - Fotos del espacio si hicieran falta
+   - Dirección
+   - Mapa
+   - Horarios
+   - Medios de contacto
+
+6. Formulario de solicitud de turno / preconsulta
+   Este punto es clave.
+   El formulario debe pedir:
+   - Nombre y apellido
+   - Teléfono
+   - Email (opcional, si lo ves útil)
+   - Motivo de consulta
+   - Especialidad o tipo de tratamiento que necesita
+   - Con qué profesional quisiera atenderse
+   - Si tiene obra social o si es particular
+   - Si tiene obra social, cuál
+   - Un campo de observaciones adicionales
+
+FUNCIONAMIENTO DEL FORMULARIO:
+Este es un requisito muy importante:
+- Cuando el paciente completa el formulario, la información debe:
+  1. Guardarse en una base de datos o sistema interno para que luego pueda verse en un panel admin
+  2. Abrir automáticamente un chat de WhatsApp con la secretaria, con un mensaje prearmado que incluya toda la información que el paciente completó
+
+ACLARACIÓN IMPORTANTE:
+- NO queremos una botonera de WhatsApp
+- NO queremos opciones automáticas dentro de WhatsApp
+- NO queremos usar la API de WhatsApp
+- Solo queremos que, al enviar el formulario, se arme un mensaje dinámico y se abra el chat con la secretaria con toda la información ya escrita, lista para enviar
+
+EJEMPLO DEL MENSAJE DE WHATSAPP:
+“Hola, quiero solicitar un turno.
+Nombre: [nombre]
+Teléfono: [teléfono]
+Motivo de consulta: [motivo]
+Especialidad: [especialidad]
+Profesional elegido: [profesional]
+Cobertura: [obra social o particular]
+Obra social: [detalle si corresponde]
+Observaciones: [texto]”
+
+PANEL ADMIN:
+También quiero un panel de administración simple pero útil donde el consultorio pueda ver:
+- Lista de formularios recibidos
+- Cantidad de consultas recibidas
+- Cantidad de personas que eligieron a cada profesional
+- Cantidad de pacientes con obra social vs particulares
+- Estadísticas básicas de interés
+- Fecha de cada consulta
+- Posibilidad de ver el detalle de cada registro
+
+MÉTRICAS Y MARKETING:
+Como el centro ya trabaja con Google Ads, la web debería contemplar:
+- Integración con Google Analytics / GA4
+- Medición de visitas
+- Medición de conversiones
+- Posibilidad de trackear clics en WhatsApp
+- Preparación para campañas de Google Ads
+
+REQUISITOS TÉCNICOS:
+- La web debe ser responsive
+- Debe tener buena performance
+- Debe estar bien estructurada para SEO básico
+- Debe tener una estética moderna
+- Debe evitar verse como una landing genérica de clínica
+- Debe priorizar experiencia de usuario, claridad visual y conversión
+
+LO QUE QUIERO QUE ME PROPONGAS:
+Quiero que me armes una propuesta técnica completa que incluya:
+1. Stack recomendado para desarrollar esta web
+2. Estructura de páginas y componentes
+3. Flujo del formulario
+4. Cómo guardar los datos para el panel admin
+5. Cómo generar el mensaje dinámico de WhatsApp sin usar API
+6. Cómo implementar analíticas y métricas
+7. Cómo organizar el panel administrativo
+8. Recomendación de hosting y dominio
+9. Sugerencias de diseño para lograr una estética moderna y dinámica
+10. Si hace falta, un MVP inicial y una versión más completa
+
+Además, si podés, proponé una arquitectura simple, escalable y razonable para este proyecto, sin agregar complejidad innecesaria.

@@ -1,130 +1,208 @@
 ﻿"use client";
 
+import Image from "next/image";
 import { motion, type Variants } from "framer-motion";
-import { SectionTitle } from "@/components/section-title";
-import { ShieldCheck, Award, Zap, Heart, CheckCircle2 } from "lucide-react";
+import { ShieldCheck, Sparkles, Heart, CheckCircle2 } from "lucide-react";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.1,
-    },
+    transition: { staggerChildren: 0.12 },
   },
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 36 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.8,
+      duration: 0.75,
       ease: [0.16, 1, 0.3, 1] as const,
     },
   },
 };
 
-const features = [
+const values = [
+  {
+    icon: Sparkles,
+    title: "Enfoque Interdisciplinario",
+    text: "Abordamos cada caso desde múltiples especialidades para garantizar resultados integrales.",
+  },
   {
     icon: ShieldCheck,
-    title: "Atención profesional",
-    description:
-      "Brindamos tratamientos odontológicos con enfoque integral, priorizando la salud, la estética y el bienestar de cada paciente.",
-  },
-  {
-    icon: Award,
-    title: "Calidad y experiencia",
-    description:
-      "Trabajamos con compromiso, actualización constante y materiales de calidad para lograr resultados confiables y duraderos.",
-  },
-  {
-    icon: Zap,
-    title: "Tecnología y precisión",
-    description:
-      "Incorporamos herramientas y procedimientos modernos para ofrecer diagnósticos más precisos y tratamientos más eficientes.",
+    title: "Calidad y Bioseguridad",
+    text: "Combinamos formación continua, tecnología actual y protocolos estrictos para tu seguridad.",
   },
   {
     icon: Heart,
-    title: "Trato humano",
-    description:
-      "Nos importa que cada persona se sienta acompañada, escuchada y contenida desde la primera consulta.",
+    title: "Base de Confianza",
+    text: "Ofrecemos un trato cercano, claro y profesional durante todo el tratamiento.",
   },
 ];
 
-const benefits = [
-  "Atención personalizada para cada caso",
-  "Profesionales capacitados y en formación constante",
-  "Acompañamiento cercano durante todo el tratamiento",
-  "Compromiso con la comodidad y confianza del paciente",
+const specialties = [
+  "Ortodoncia",
+  "Alineadores",
+  "Ortopedia Dentomaxilar",
+  "Implantes Dentales",
+  "Rehabilitación Protésica",
+  "Estética",
 ];
 
 export function AboutSection() {
   return (
-    <section id="nosotros" className="bg-white py-20 md:py-28">
-      <div className="container mx-auto px-4 md:px-6">
+    <section id="nosotros" className="bg-white py-24 md:py-32">
+      <div className="shell">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
-          className="grid items-center gap-12 lg:grid-cols-2"
+          className="grid items-stretch gap-14 lg:grid-cols-[1fr_0.82fr]"
         >
-          <motion.div variants={itemVariants} className="space-y-6">
-            <SectionTitle
-              eyebrow="Sobre nosotros"
-              title="Odontología pensada para cuidar tu salud y tu sonrisa"
-              description="Combinamos experiencia, atención cercana y tratamientos personalizados para acompañarte en cada etapa de tu cuidado bucal."
-            />
-
-            <p className="text-base leading-7 text-slate-600 md:text-lg">
-              Nuestro objetivo es ofrecer una experiencia profesional, cálida y
-              confiable. Creemos que una buena atención odontológica no solo se
-              basa en la técnica, sino también en la escucha, la claridad y el
-              acompañamiento.
-            </p>
-
-            <div className="grid gap-3 pt-2">
-              {benefits.map((benefit) => (
-                <div key={benefit} className="flex items-start gap-3">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
-                  <p className="text-sm text-slate-700 md:text-base">
-                    {benefit}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
+          {/* IZQUIERDA */}
           <motion.div
             variants={containerVariants}
-            className="grid gap-4 sm:grid-cols-2"
+            className="flex h-full flex-col justify-between gap-10"
           >
-            {features.map((feature) => {
-              const Icon = feature.icon;
+            <div className="space-y-8">
+              <motion.div variants={itemVariants}>
+                <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#282829]/55">
+                  Nuestra Identidad
+                </p>
 
-              return (
-                <motion.div
-                  key={feature.title}
-                  variants={itemVariants}
-                  className="rounded-2xl border border-slate-200 bg-slate-50 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
-                >
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700">
-                    <Icon className="h-6 w-6" />
+                <h2 className="font-display text-4xl leading-[0.95] tracking-tight text-[#282829] md:text-5xl">
+                  Trayectoria, compromiso y calidez humana.
+                </h2>
+
+                <p className="mt-6 max-w-xl text-sm leading-7 text-[#282829]/55 md:text-base">
+                  Somos un matrimonio de profesionales especialistas en Cirugía
+                  Maxilofacial y Odontopediatría. Nuestra unión personal y
+                  profesional define el criterio de excelencia de nuestro centro.
+                </p>
+              </motion.div>
+
+              <motion.div variants={itemVariants} className="flex items-center gap-5">
+                <div className="h-px flex-1 bg-[#282829]/10" />
+                <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[#282829]/35">
+                  Más de 20 años de experiencia
+                </p>
+                <div className="h-px flex-1 bg-[#282829]/10" />
+              </motion.div>
+
+              <motion.div
+                variants={itemVariants}
+                className="relative overflow-hidden rounded-[34px] bg-[#f8f9f9] p-8 shadow-[0_22px_50px_rgba(40,40,41,0.10)]"
+              >
+                <div className="absolute left-0 top-0 h-full w-[6px] rounded-r-full bg-[#282829]" />
+
+                <div className="pointer-events-none absolute -right-8 -top-10 text-[180px] font-display leading-none text-[#282829]/[0.025]">
+                  ”
+                </div>
+
+                <p className="relative max-w-[520px] text-2xl italic leading-[1.18] text-[#282829]/70">
+                  “Creemos que la base de un buen tratamiento es la{" "}
+                  <span className="font-semibold not-italic text-[#282829] underline decoration-[#282829]/25 underline-offset-4">
+                    confianza
+                  </span>
+                  . Acompañamos a cada paciente durante todo el proceso con un
+                  trato{" "}
+                  <span className="font-semibold not-italic text-[#282829]">
+                    cercano, claro y profesional.
+                  </span>
+                  ”
+                </p>
+
+                <div className="relative mt-8 grid gap-4 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#282829]/35 sm:grid-cols-3">
+                  {specialties.map((item) => (
+                    <div key={item} className="flex items-center gap-2">
+                      <CheckCircle2 className="h-3.5 w-3.5 text-[#282829]/30" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+
+            <motion.div
+              variants={itemVariants}
+              className="grid gap-8 md:grid-cols-3"
+            >
+              {values.map((value) => {
+                const Icon = value.icon;
+
+                return (
+                  <div key={value.title} className="space-y-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white shadow-[0_16px_40px_rgba(40,40,41,0.08)]">
+                      <Icon className="h-5 w-5 text-[#282829]/45" />
+                    </div>
+
+                    <div>
+                      <h3 className="font-display text-lg leading-tight text-[#282829]">
+                        {value.title}
+                      </h3>
+                      <p className="mt-3 text-sm leading-6 text-[#282829]/55">
+                        {value.text}
+                      </p>
+                    </div>
                   </div>
+                );
+              })}
+            </motion.div>
+          </motion.div>
 
-                  <h3 className="mb-2 text-lg font-semibold text-slate-900">
-                    {feature.title}
-                  </h3>
+          {/* DERECHA */}
+          <motion.div
+            variants={containerVariants}
+            className="flex h-full flex-col justify-between gap-6"
+          >
+            <motion.div
+              variants={itemVariants}
+              className="relative h-[430px] overflow-hidden rounded-[34px] shadow-[0_24px_60px_rgba(40,40,41,0.12)]"
+            >
+              <Image
+                src="/Consultorio_1.webp"
+                alt="Fachada de Onofri-Di Fulvio Odontología"
+                fill
+                className="object-cover"
+                sizes="(min-width: 1024px) 420px, 100vw"
+                priority
+              />
+            </motion.div>
 
-                  <p className="text-sm leading-6 text-slate-600">
-                    {feature.description}
-                  </p>
-                </motion.div>
-              );
-            })}
+            <motion.div
+              variants={itemVariants}
+              className="relative h-[230px] overflow-hidden rounded-[30px] shadow-[0_20px_45px_rgba(40,40,41,0.10)]"
+            >
+              <Image
+                src="/Consultorio_2.webp"
+                alt="Interior del consultorio Onofri-Di Fulvio"
+                fill
+                className="object-cover"
+                sizes="(min-width: 1024px) 420px, 100vw"
+              />
+            </motion.div>
+
+            <motion.div
+              variants={itemVariants}
+              className="rounded-[30px] bg-[#f8f9f9] p-7 shadow-[0_18px_45px_rgba(40,40,41,0.10)]"
+            >
+              <div className="mb-5 h-[2px] w-12 rounded-full bg-[#282829]/15" />
+
+              <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#282829]/40">
+                Misión médica
+              </p>
+
+              <p className="mt-4 max-w-sm text-sm leading-6 text-[#282829]/60">
+                Brindamos tratamientos de{" "}
+                <span className="font-semibold text-[#282829]">
+                  alta calidad
+                </span>
+                , combinando tecnología actual y bioseguridad.
+              </p>
+            </motion.div>
           </motion.div>
         </motion.div>
       </div>

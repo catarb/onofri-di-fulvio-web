@@ -74,10 +74,9 @@ export function AboutSection() {
         >
           <motion.div variants={itemVariants} className="space-y-6">
             <SectionTitle
-              badge="Sobre nosotros"
+              eyebrow="Sobre nosotros"
               title="Odontología pensada para cuidar tu salud y tu sonrisa"
-              subtitle="Combinamos experiencia, atención cercana y tratamientos personalizados para acompañarte en cada etapa de tu cuidado bucal."
-              align="left"
+              description="Combinamos experiencia, atención cercana y tratamientos personalizados para acompañarte en cada etapa de tu cuidado bucal."
             />
 
             <p className="text-base leading-7 text-slate-600 md:text-lg">
@@ -91,7 +90,9 @@ export function AboutSection() {
               {benefits.map((benefit) => (
                 <div key={benefit} className="flex items-start gap-3">
                   <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
-                  <p className="text-sm text-slate-700 md:text-base">{benefit}</p>
+                  <p className="text-sm text-slate-700 md:text-base">
+                    {benefit}
+                  </p>
                 </div>
               ))}
             </div>

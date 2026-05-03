@@ -233,49 +233,58 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
               </thead>
               <tbody className="divide-y divide-ink/[0.04] bg-white">
                 {visibleAppointments.map((row) => (
-                  <tr key={row.id} className="group transition-colors duration-200 hover:bg-[#f6fbfb]">
-                    <td className="px-6 py-6 text-ink/60">{row.dateLabel}</td>
-                    <td className="px-6 py-6 font-semibold text-ink">{row.fullName}</td>
-                    <td className="px-6 py-6 text-ink/60">{row.phone}</td>
+                  <tr key={row.id} className="group transition-colors duration-200 even:bg-[#fcfcfb]/40 hover:bg-[#f1f9f8]">
+                    <td className="px-6 py-6 text-ink/50">{row.dateLabel}</td>
+                    <td className="px-6 py-6">
+                      <span className="text-base font-bold tracking-tight text-ink">{row.fullName}</span>
+                    </td>
+                    <td className="px-6 py-6 font-mono text-xs tracking-tighter text-ink/60">{row.phone}</td>
                     <td className="px-6 py-6 text-ink/60">{row.specialtyLabel}</td>
                     <td className="px-6 py-6 text-ink/60">{row.coverageName || "Particular"}</td>
-                    <td className="max-w-[180px] truncate px-6 py-6 text-ink/50">{row.notes || "-"}</td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-2">
-                      {statusUpdatingId === row.id ? <Loader2 className="animate-spin text-ink/30" size={14} /> : null}
-                      <select
-                        value={row.status}
-                        onChange={(e) => void handleStatusChange(row.id, e.target.value as AppointmentStatus)}
-                        className={`rounded-full border px-3 py-1.5 text-xs font-medium outline-none transition-all focus:ring-4 focus:ring-aqua/10 ${statusBadgeClass[row.status]}`}
-                      >
-                        <option value="nuevo">nuevo</option>
-                        <option value="contactado">contactado</option>
-                        <option value="aceptado">aceptado</option>
-                        <option value="rechazado">rechazado</option>
-                      </select>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center justify-end gap-3">
-                      <a
-                        href={buildPatientWhatsappUrl(row.phone, row.fullName)}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-2 rounded-full border border-ink/[0.06] bg-white px-4 py-2 text-xs font-medium text-ink/60 transition-all hover:border-[#25D366]/30 hover:bg-[#25D366]/5 hover:text-[#1f7d45] hover:shadow-premium-sm active:scale-95"
-                      >
-                        <MessageCircle size={14} className="text-[#25D366]" /> <span className="hidden xl:inline">WhatsApp</span>
-                      </a>
-                      <button
-                        onClick={() => setSelected(row)}
-                        className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-ink/[0.06] bg-white text-ink/40 transition-all hover:border-aqua/30 hover:bg-aqua/5 hover:text-aqua hover:shadow-premium-sm active:scale-95"
-                      >
-                        <ExternalLink size={14} />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+                    <td className="max-w-[180px] truncate px-6 py-6 text-ink/40 italic">{row.notes || "-"}</td>
+                    <td className="px-6 py-6">
+                      <div className="flex items-center gap-3">
+                        {statusUpdatingId === row.id ? (
+                          <div className="flex h-5 w-5 items-center justify-center">
+                            <Loader2 className="animate-spin text-aqua" size={14} />
+                          </div>
+                        ) : null}
+                        <select
+                          value={row.status}
+                          onChange={(e) => void handleStatusChange(row.id, e.target.value as AppointmentStatus)}
+                          className={`rounded-xl border px-4 py-2 text-[11px] font-bold uppercase tracking-wider outline-none transition-all duration-300 focus:ring-4 focus:ring-aqua/10 ${statusBadgeClass[row.status]}`}
+                        >
+                          <option value="nuevo">nuevo</option>
+                          <option value="contactado">contactado</option>
+                          <option value="aceptado">aceptado</option>
+                          <option value="rechazado">rechazado</option>
+                        </select>
+                      </div>
+                    </td>
+                    <td className="px-6 py-6">
+                      <div className="flex items-center justify-end gap-3">
+                        <a
+                          href={buildPatientWhatsappUrl(row.phone, row.fullName)}
+                          target="_blank"
+                          rel="noreferrer"
+                          title="Contactar por WhatsApp"
+                          className="flex h-10 items-center gap-2 rounded-xl border border-ink/[0.06] bg-white px-4 text-xs font-semibold text-ink/60 transition-all hover:border-[#25D366]/30 hover:bg-[#25D366]/5 hover:text-[#1f7d45] hover:shadow-premium-sm active:scale-95"
+                        >
+                          <MessageCircle size={16} className="text-[#25D366]" />
+                          <span className="hidden xl:inline">WhatsApp</span>
+                        </a>
+                        <button
+                          onClick={() => setSelected(row)}
+                          title="Ver detalles"
+                          className="flex h-10 w-10 items-center justify-center rounded-xl border border-ink/[0.06] bg-white text-ink/40 transition-all hover:border-aqua/30 hover:bg-aqua/5 hover:text-aqua hover:shadow-premium-sm active:scale-95"
+                        >
+                          <ExternalLink size={16} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
           </table>
         </div>
 

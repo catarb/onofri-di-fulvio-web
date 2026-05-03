@@ -16,7 +16,8 @@ const config: Config = {
       boxShadow: {
         glow: "0 30px 80px rgba(12, 29, 34, 0.08)",
         premium: "0 20px 40px -15px rgba(15, 23, 32, 0.12)",
-        "premium-hover": "0 30px 60px -12px rgba(15, 23, 32, 0.18)"
+        "premium-hover": "0 30px 60px -12px rgba(15, 23, 32, 0.18)",
+        "premium-sm": "0 10px 20px -10px rgba(15, 23, 32, 0.08)"
       },
       animation: {
         "fade-in": "fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",

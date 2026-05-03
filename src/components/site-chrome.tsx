@@ -1,12 +1,15 @@
 ﻿"use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Calendar, MessageCircle, MapPin, User, Sparkles, Info, ScanFace } from "lucide-react";
 
 export function SiteChrome({ children }: { children: React.ReactNode }) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
+  const isAdminRoute = pathname?.startsWith("/admin");
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 18);
@@ -14,6 +17,10 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  if (isAdminRoute) {
+    return <main>{children}</main>;
+  }
 
   return (
     <>
@@ -133,4 +140,3 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
     </>
   );
 }
-

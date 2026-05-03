@@ -70,18 +70,31 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
     to: ""
   });
   const [csvExportEnabled, setCsvExportEnabled] = useState(false);
+  const [whatsappNotificationsEnabled, setWhatsappNotificationsEnabled] = useState(false);
+  const [followUpRemindersEnabled, setFollowUpRemindersEnabled] = useState(false);
 
   // Load preferences from localStorage on mount
   useMemo(() => {
     if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("admin_csv_export_enabled");
-      if (saved === "true") setCsvExportEnabled(true);
+      setCsvExportEnabled(localStorage.getItem("admin_csv_export_enabled") === "true");
+      setWhatsappNotificationsEnabled(localStorage.getItem("admin_whatsapp_notif_enabled") === "true");
+      setFollowUpRemindersEnabled(localStorage.getItem("admin_reminders_enabled") === "true");
     }
   }, []);
 
   const handleToggleCsv = (val: boolean) => {
     setCsvExportEnabled(val);
     localStorage.setItem("admin_csv_export_enabled", String(val));
+  };
+
+  const handleToggleWhatsapp = (val: boolean) => {
+    setWhatsappNotificationsEnabled(val);
+    localStorage.setItem("admin_whatsapp_notif_enabled", String(val));
+  };
+
+  const handleToggleReminders = (val: boolean) => {
+    setFollowUpRemindersEnabled(val);
+    localStorage.setItem("admin_reminders_enabled", String(val));
   };
 
   const exportToCSV = () => {
@@ -276,6 +289,21 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-aqua"></span>
                 </span>
                 Sistema activo
+              </div>
+              
+              <div className="flex items-center gap-3">
+                {whatsappNotificationsEnabled && (
+                  <div className="flex h-8 items-center gap-2 rounded-full bg-[#25D366]/10 px-3 text-[10px] font-bold uppercase tracking-wider text-[#1f7d45]">
+                    <MessageCircle size={12} />
+                    Notif. Activas
+                  </div>
+                )}
+                {followUpRemindersEnabled && (
+                  <div className="flex h-8 items-center gap-2 rounded-full bg-aqua/10 px-3 text-[10px] font-bold uppercase tracking-wider text-aqua">
+                    <Sparkles size={12} />
+                    Recordatorios
+                  </div>
+                )}
               </div>
               <motion.button 
                 whileHover={{ scale: 1.02, y: -1 }}
@@ -525,7 +553,14 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
                   <tr key={row.id} className="group cursor-pointer transition-colors duration-200 even:bg-[#fcfcfb]/40 hover:bg-[#f1f9f8]">
                     <td className="px-6 py-6 text-ink/50">{row.dateLabel}</td>
                     <td className="px-6 py-6">
-                      <span className="text-base font-bold tracking-tight text-ink">{row.fullName}</span>
+                      <div className="flex flex-col gap-1">
+                        <span className="text-base font-bold tracking-tight text-ink">{row.fullName}</span>
+                        {followUpRemindersEnabled && (row.status === "nuevo" || row.status === "contactado") && (
+                          <span className="flex w-fit items-center gap-1 rounded-full bg-aqua/5 px-2 py-0.5 text-[9px] font-bold uppercase tracking-widest text-aqua">
+                            Seguimiento pendiente
+                          </span>
+                        )}
+                      </div>
                     </td>
                     <td className="px-6 py-6 font-mono text-xs tracking-tighter text-ink/60">{row.phone}</td>
                     <td className="px-6 py-6 text-ink/60">{row.specialtyLabel}</td>
@@ -684,18 +719,27 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
                   </h3>
                   <div className="space-y-4">
                     {[
-                      { label: "Notificaciones WhatsApp", active: true },
-                      { label: "Recordatorios de seguimiento", active: false },
+                      { label: "Notificaciones WhatsApp", active: whatsappNotificationsEnabled, id: "whatsapp" },
+                      { label: "Recordatorios de seguimiento", active: followUpRemindersEnabled, id: "reminders" },
                       { label: "Exportación automática CSV", active: csvExportEnabled, id: "csv" }
                     ].map((pref) => (
-                      <div key={pref.label} className="flex items-center justify-between rounded-xl bg-white/40 p-3">
-                        <span className="text-sm font-medium text-ink/60">{pref.label}</span>
-                        <div 
-                          onClick={() => pref.id === "csv" && handleToggleCsv(!pref.active)}
-                          className={`h-5 w-10 cursor-pointer rounded-full transition-colors ${pref.active ? "bg-aqua" : "bg-ink/10"} relative`}
-                        >
-                          <div className={`absolute top-1 h-3 w-3 rounded-full bg-white transition-all ${pref.active ? "left-6" : "left-1"}`} />
+                      <div key={pref.label} className="flex flex-col gap-2 rounded-xl bg-white/40 p-3">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm font-medium text-ink/60">{pref.label}</span>
+                          <div 
+                            onClick={() => {
+                              if (pref.id === "csv") handleToggleCsv(!pref.active);
+                              if (pref.id === "whatsapp") handleToggleWhatsapp(!pref.active);
+                              if (pref.id === "reminders") handleToggleReminders(!pref.active);
+                            }}
+                            className={`h-5 w-10 cursor-pointer rounded-full transition-colors ${pref.active ? "bg-aqua" : "bg-ink/10"} relative`}
+                          >
+                            <div className={`absolute top-1 h-3 w-3 rounded-full bg-white transition-all ${pref.active ? "left-6" : "left-1"}`} />
+                          </div>
                         </div>
+                        {pref.id === "whatsapp" && !pref.active && (
+                          <p className="text-[10px] text-ink/30 italic">Las acciones manuales de WhatsApp siguen disponibles.</p>
+                        )}
                       </div>
                     ))}
                   </div>

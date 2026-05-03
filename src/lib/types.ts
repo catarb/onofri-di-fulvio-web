@@ -1,4 +1,4 @@
-export type AppointmentRecord = {
+﻿export type AppointmentRecord = {
   id: string;
   createdAt: string;
   fullName: string;

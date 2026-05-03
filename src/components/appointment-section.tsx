@@ -1,17 +1,17 @@
-import { SectionTitle } from "@/components/section-title";
+﻿import { SectionTitle } from "@/components/section-title";
 import { AppointmentForm } from "@/components/appointment-form";
 
 export function AppointmentSection({ standalone = false }: { standalone?: boolean }) {
   return (
     <section id="turno" className={standalone ? "pb-16" : "section-space"}>
-      <div className="shell grid gap-16 lg:grid-cols-[0.85fr_1.15fr] lg:gap-24 items-start">
+      <div className="shell grid items-start gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
         <div className="lg:sticky lg:top-32">
           <SectionTitle
             eyebrow="Solicitud de turno"
             title="Pedir una consulta debería sentirse fácil y directo."
             description="El formulario registra información clave para agilizar tu atención. Al finalizar, se abrirá WhatsApp con todos tus datos listos para enviar."
           />
-          <div className="mt-12 glass rounded-[40px] p-8 lg:p-10">
+          <div className="mt-10 glass rounded-[40px] p-8 lg:p-10">
             <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-ink/30 mb-8 border-b border-ink/5 pb-4">¿Cómo funciona?</p>
             <ol className="space-y-6">
               {[

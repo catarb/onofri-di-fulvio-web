@@ -3,18 +3,23 @@
 @tailwind utilities;
 
 :root {
-  /* 0.9 = suave, 1.2 = recomendado, 1.35 = marcado */
-  --card-hover-strength: 1.2;
-  --card-hover-lift: calc(7px * var(--card-hover-strength));
-  --card-hover-shadow-y: calc(34px * var(--card-hover-strength));
-  --card-hover-shadow-blur: calc(70px * var(--card-hover-strength));
-  --card-hover-shadow-spread: calc(-16px + ((var(--card-hover-strength) - 1) * 2px));
-  --card-hover-scale: 1.008;
+  --card-hover-lift: 6px;
+  --card-hover-scale: 1.006;
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply selection:bg-ink selection:text-white;
+  }
+
+  a,
+  button,
+  [role="button"] {
+    cursor: pointer;
   }
 }
 
@@ -28,17 +33,25 @@
   }
 
   .section-space {
-    @apply py-20 sm:py-28 lg:py-36 relative;
+    @apply relative py-16 sm:py-20 lg:py-24;
   }
 
   .premium-card {
-    @apply transition-all duration-300 ease-in-out;
+    @apply cursor-pointer transition-all duration-[250ms] ease-in-out;
     will-change: transform, box-shadow, border-color;
   }
 
   .premium-card-icon {
     @apply transition-all duration-300 ease-in-out;
     will-change: transform, color, background-color;
+  }
+
+  .ui-cta {
+    @apply relative inline-flex h-12 items-center justify-center gap-3 overflow-hidden rounded-full px-8 text-sm font-bold transition-all duration-300 ease-out hover:scale-[1.02] active:scale-95;
+  }
+
+  .ui-chip {
+    @apply inline-flex min-h-9 items-center justify-center rounded-full border border-ink/10 bg-white/70 px-4 py-2 text-center text-[11px] font-medium leading-none text-ink/65;
   }
 }
 
@@ -47,8 +60,8 @@
     transform: translateY(calc(-1 * var(--card-hover-lift))) scale(var(--card-hover-scale));
     border-color: rgba(100, 181, 173, 0.3);
     box-shadow:
-      0 var(--card-hover-shadow-y) var(--card-hover-shadow-blur) var(--card-hover-shadow-spread) rgba(15, 23, 32, 0.24),
-      0 0 0 1px rgba(100, 181, 173, 0.24);
+      0 22px 48px -24px rgba(15, 23, 32, 0.32),
+      0 0 0 1px rgba(100, 181, 173, 0.22);
   }
 
   .premium-card:hover .premium-card-icon {
@@ -56,9 +69,24 @@
   }
 }
 
-/* Custom backgrounds and patterns */
+.ui-cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 25%, rgba(255, 255, 255, 0.26) 50%, transparent 75%);
+  transform: translateX(-130%);
+  transition: transform 450ms ease;
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ui-cta:hover::after {
+    transform: translateX(130%);
+  }
+}
+
 .bg-hero-radial {
-  background-image: 
+  background-image:
     radial-gradient(circle at 20% 30%, rgba(40, 40, 41, 0.03), transparent 40%),
     radial-gradient(circle at 80% 70%, rgba(40, 40, 41, 0.02), transparent 40%),
     linear-gradient(to bottom, #ffffff, #f9f9f9);
@@ -92,7 +120,6 @@
   background-repeat: no-repeat;
 }
 
-/* Scroll reveal helpers */
 .scroll-reveal {
   @apply opacity-0 translate-y-8 transition-all duration-1000 ease-out;
 }
@@ -106,7 +133,6 @@
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Editorial Dividers */
 .divider-h {
   @apply h-[1px] w-full bg-ink/5;
 }
@@ -115,7 +141,6 @@
   @apply w-[1px] h-full bg-ink/5;
 }
 
-/* Subtle Scroll Animations */
 .reveal-on-scroll {
   @apply opacity-0 translate-y-4 transition-all duration-1000 ease-out;
 }
@@ -123,4 +148,3 @@
 .reveal-active {
   @apply opacity-100 translate-y-0;
 }
-

@@ -10,17 +10,18 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <div className="divider-h shell opacity-50" />
+      <div className="divider-h shell opacity-45" />
       <AboutSection />
-      <div className="divider-h shell opacity-50" />
+      <div className="divider-h shell opacity-45" />
       <ProfessionalsSection />
-      <div className="divider-h shell opacity-50" />
+      <div className="divider-h shell opacity-45" />
       <SpecialtiesSection />
-      <div className="divider-h shell opacity-50" />
+      <div className="divider-h shell opacity-45" />
       <ClinicSection />
-      <div className="divider-h shell opacity-50" />
+      <div className="divider-h shell opacity-45" />
       <AppointmentSection />
       <FaqSection />
     </>
   );
 }
+

@@ -53,7 +53,7 @@ const specialties = [
 
 export function AboutSection() {
   return (
-    <section id="nosotros" className="bg-white py-24 md:py-32">
+    <section id="nosotros" className="bg-white py-20 md:py-24">
       <div className="shell">
         <motion.div
           variants={containerVariants}
@@ -209,3 +209,4 @@ export function AboutSection() {
     </section>
   );
 }
+

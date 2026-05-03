@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 
@@ -40,14 +40,14 @@ export function FaqSection() {
   };
 
   return (
-    <section className="section-space">
+    <section className="pt-12 pb-14 sm:pt-16 sm:pb-16 lg:pt-20 lg:pb-20">
       <div className="shell">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={cardsContainer}
-          className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8"
+          className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-6"
         >
           {faqs.map((faq) => (
             <motion.article
@@ -65,3 +65,5 @@ export function FaqSection() {
     </section>
   );
 }
+
+

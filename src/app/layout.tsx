@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Fraunces, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { SiteChrome } from "@/components/site-chrome";
@@ -16,13 +16,18 @@ const sans = DM_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
-  title: "Onofri & Difulvio | Centro Odontológico",
+  title: "Onofri-Di Fulvio",
   description:
     "Centro odontológico moderno con enfoque humano, especialidades integrales y solicitud de turno online.",
+  icons: {
+    icon: "/logo-adultos.png",
+    shortcut: "/logo-adultos.png",
+    apple: "/logo-adultos.png"
+  },
   openGraph: {
-    title: "Onofri & Difulvio",
+    title: "Onofri-Di Fulvio",
     description:
-      "Odontología moderna, cercana y precisa. Solicita tu turno online y conoce al equipo.",
+      "Odontología moderna, cercana y precisa. Solicitá tu turno online y conocé al equipo.",
     type: "website"
   }
 };

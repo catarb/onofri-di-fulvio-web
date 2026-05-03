@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import type { AdminAppointment, AppointmentStatus } from "@/lib/admin-appointments";
 import { ExternalLink, Loader2, LogOut, MessageCircle, Search } from "lucide-react";
 import { Counter } from "@/components/counter";
@@ -174,11 +175,11 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
 
       <div className="shell relative z-10">
         <header className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div>
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
             <h1 className="font-display text-4xl tracking-tight text-ink">Panel Administrativo</h1>
             <p className="mt-2 text-base text-ink/40">Gestión de solicitudes y seguimiento de pacientes</p>
-          </div>
-          <div className="flex items-center gap-6">
+          </motion.div>
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} className="flex items-center gap-6">
             <div className="hidden items-center gap-2 text-xs font-medium text-ink/40 sm:flex">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-aqua/50 opacity-75"></span>
@@ -186,11 +187,16 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
               </span>
               Actividad en tiempo real
             </div>
-            <button onClick={handleLogout} className="flex items-center gap-2 rounded-full border border-ink/[0.08] bg-white px-5 py-2.5 text-sm font-medium text-ink/60 transition-all hover:border-ink/20 hover:text-ink hover:shadow-premium-sm active:scale-95">
+            <motion.button 
+              whileHover={{ scale: 1.02, y: -1 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={handleLogout} 
+              className="flex items-center gap-2 rounded-full border border-ink/[0.08] bg-white px-5 py-2.5 text-sm font-medium text-ink/60 transition-all hover:border-ink/20 hover:text-ink hover:shadow-premium active:bg-ink/[0.02]"
+            >
               <LogOut size={14} />
               Cerrar sesión
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
         </header>
 
         <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
@@ -200,8 +206,15 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
             { label: "Contactadas", value: metrics.contactado },
             { label: "Aceptadas", value: metrics.aceptado },
             { label: "Rechazadas", value: metrics.rechazado }
-          ].map((card) => (
-            <article key={card.label} className="group relative overflow-hidden rounded-[24px] border border-white/80 bg-white/70 p-7 shadow-premium-sm backdrop-blur-lg transition-all duration-500 hover:-translate-y-2 hover:bg-white hover:shadow-premium">
+          ].map((card, idx) => (
+            <motion.article 
+              key={card.label}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1, duration: 0.5, ease: "easeOut" }}
+              whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(0,0,0,0.04)" }}
+              className="group relative overflow-hidden rounded-[24px] border border-white/80 bg-white/70 p-7 shadow-premium-sm backdrop-blur-lg transition-colors duration-500 hover:bg-white"
+            >
               {/* Top Glow Line */}
               <div className="absolute inset-x-0 top-0 h-[3px] bg-aqua/20 shadow-[0_0_15px_rgba(100,181,173,0)] transition-all duration-500 group-hover:bg-aqua group-hover:shadow-[0_0_15px_rgba(100,181,173,0.5)]" />
               
@@ -209,15 +222,20 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
               <div className="mt-4 flex items-baseline gap-1">
                 <Counter 
                   value={card.value} 
-                  className="font-display text-5xl font-medium tracking-tight text-ink transition-transform duration-500 group-hover:scale-110" 
+                  className="font-display text-5xl font-medium tracking-tight text-ink transition-transform duration-500 group-hover:scale-105" 
                 />
               </div>
-            </article>
+            </motion.article>
           ))}
         </section>
 
-        <section className="mt-8 grid gap-6 lg:grid-cols-2">
-          <article className="rounded-[24px] border border-white/80 bg-white/70 p-7 shadow-premium-sm backdrop-blur-lg">
+        <motion.section 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.6 }}
+          className="mt-8 grid gap-6 lg:grid-cols-2"
+        >
+          <article className="rounded-[24px] border border-white/80 bg-white/70 p-7 shadow-premium-sm backdrop-blur-lg transition-shadow hover:shadow-premium">
             <div className="mb-8 flex items-center justify-between">
               <div>
                 <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-ink/40">Solicitudes (7 días)</h3>
@@ -255,13 +273,14 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
                     strokeWidth={4} 
                     dot={{ r: 5, fill: "#59a69e", strokeWidth: 3, stroke: "#fff" }}
                     activeDot={{ r: 7, fill: "#59a69e", strokeWidth: 0 }}
+                    animationDuration={1500}
                   />
                 </LineChart>
               </ResponsiveContainer>
             </div>
           </article>
 
-          <article className="rounded-[24px] border border-white/80 bg-white/70 p-7 shadow-premium-sm backdrop-blur-lg">
+          <article className="rounded-[24px] border border-white/80 bg-white/70 p-7 shadow-premium-sm backdrop-blur-lg transition-shadow hover:shadow-premium">
             <div className="mb-8 flex items-center justify-between">
               <div>
                 <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-ink/40">Especialidades</h3>
@@ -285,7 +304,7 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
                     cursor={{ fill: "rgba(100, 181, 173, 0.05)" }} 
                     contentStyle={{ borderRadius: "16px", border: "none", boxShadow: "0 10px 30px rgba(0,0,0,0.08)", fontSize: "12px" }} 
                   />
-                  <Bar dataKey="value" radius={[0, 8, 8, 0]} barSize={24}>
+                  <Bar dataKey="value" radius={[0, 8, 8, 0]} barSize={24} animationDuration={1500}>
                     {analyticsData.specialtyData.map((_, index) => (
                       <Cell key={index} fill={index === 0 ? "#59a69e" : "#64b5ad50"} />
                     ))}
@@ -294,7 +313,7 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
               </ResponsiveContainer>
             </div>
           </article>
-        </section>
+        </motion.section>
 
         <section className="mt-8 border-b border-ink/[0.03] pb-8">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
@@ -381,58 +400,71 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
                 </tr>
               </thead>
               <tbody className="divide-y divide-ink/[0.04] bg-white">
-                {visibleAppointments.map((row) => (
-                  <tr key={row.id} className="group transition-colors duration-200 even:bg-[#fcfcfb]/40 hover:bg-[#f1f9f8]">
-                    <td className="px-6 py-6 text-ink/50">{row.dateLabel}</td>
-                    <td className="px-6 py-6">
-                      <span className="text-base font-bold tracking-tight text-ink">{row.fullName}</span>
-                    </td>
-                    <td className="px-6 py-6 font-mono text-xs tracking-tighter text-ink/60">{row.phone}</td>
-                    <td className="px-6 py-6 text-ink/60">{row.specialtyLabel}</td>
-                    <td className="px-6 py-6 text-ink/60">{row.coverageName || "Particular"}</td>
-                    <td className="max-w-[180px] truncate px-6 py-6 text-ink/40 italic">{row.notes || "-"}</td>
-                    <td className="px-6 py-6">
-                      <div className="flex items-center gap-3">
-                        {statusUpdatingId === row.id ? (
-                          <div className="flex h-5 w-5 items-center justify-center">
-                            <Loader2 className="animate-spin text-aqua" size={14} />
-                          </div>
-                        ) : null}
-                        <select
-                          value={row.status}
-                          onChange={(e) => void handleStatusChange(row.id, e.target.value as AppointmentStatus)}
-                          className={`rounded-xl border px-4 py-2 text-[11px] font-bold uppercase tracking-wider outline-none transition-all duration-300 focus:ring-4 focus:ring-aqua/10 ${statusBadgeClass[row.status]}`}
-                        >
-                          <option value="nuevo">nuevo</option>
-                          <option value="contactado">contactado</option>
-                          <option value="aceptado">aceptado</option>
-                          <option value="rechazado">rechazado</option>
-                        </select>
-                      </div>
-                    </td>
-                    <td className="px-6 py-6">
-                      <div className="flex items-center justify-end gap-3">
-                        <a
-                          href={buildPatientWhatsappUrl(row.phone, row.fullName)}
-                          target="_blank"
-                          rel="noreferrer"
-                          title="Contactar por WhatsApp"
-                          className="flex h-10 items-center gap-2 rounded-xl border border-ink/[0.06] bg-white px-4 text-xs font-semibold text-ink/60 transition-all hover:border-[#25D366]/30 hover:bg-[#25D366]/5 hover:text-[#1f7d45] hover:shadow-premium-sm active:scale-95"
-                        >
-                          <MessageCircle size={16} className="text-[#25D366]" />
-                          <span className="hidden xl:inline">WhatsApp</span>
-                        </a>
-                        <button
-                          onClick={() => setSelected(row)}
-                          title="Ver detalles"
-                          className="flex h-10 w-10 items-center justify-center rounded-xl border border-ink/[0.06] bg-white text-ink/40 transition-all hover:border-aqua/30 hover:bg-aqua/5 hover:text-aqua hover:shadow-premium-sm active:scale-95"
-                        >
-                          <ExternalLink size={16} />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                <AnimatePresence mode="popLayout">
+                  {visibleAppointments.map((row, idx) => (
+                    <motion.tr 
+                      key={row.id}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ delay: Math.min(idx * 0.05, 0.5), duration: 0.3 }}
+                      className="group transition-colors duration-200 even:bg-[#fcfcfb]/40 hover:bg-[#f1f9f8]"
+                    >
+                      <td className="px-6 py-6 text-ink/50">{row.dateLabel}</td>
+                      <td className="px-6 py-6">
+                        <span className="text-base font-bold tracking-tight text-ink">{row.fullName}</span>
+                      </td>
+                      <td className="px-6 py-6 font-mono text-xs tracking-tighter text-ink/60">{row.phone}</td>
+                      <td className="px-6 py-6 text-ink/60">{row.specialtyLabel}</td>
+                      <td className="px-6 py-6 text-ink/60">{row.coverageName || "Particular"}</td>
+                      <td className="max-w-[180px] truncate px-6 py-6 text-ink/40 italic">{row.notes || "-"}</td>
+                      <td className="px-6 py-6">
+                        <div className="flex items-center gap-3">
+                          {statusUpdatingId === row.id ? (
+                            <div className="flex h-5 w-5 items-center justify-center">
+                              <Loader2 className="animate-spin text-aqua" size={14} />
+                            </div>
+                          ) : null}
+                          <select
+                            value={row.status}
+                            onChange={(e) => void handleStatusChange(row.id, e.target.value as AppointmentStatus)}
+                            className={`cursor-pointer rounded-xl border px-4 py-2 text-[11px] font-bold uppercase tracking-wider outline-none transition-all duration-300 focus:ring-4 focus:ring-aqua/10 ${statusBadgeClass[row.status]}`}
+                          >
+                            <option value="nuevo">nuevo</option>
+                            <option value="contactado">contactado</option>
+                            <option value="aceptado">aceptado</option>
+                            <option value="rechazado">rechazado</option>
+                          </select>
+                        </div>
+                      </td>
+                      <td className="px-6 py-6">
+                        <div className="flex items-center justify-end gap-3">
+                          <motion.a
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            href={buildPatientWhatsappUrl(row.phone, row.fullName)}
+                            target="_blank"
+                            rel="noreferrer"
+                            title="Contactar por WhatsApp"
+                            className="flex h-10 items-center gap-2 rounded-xl border border-ink/[0.06] bg-white px-4 text-xs font-semibold text-ink/60 transition-all hover:border-[#25D366]/30 hover:bg-[#25D366]/5 hover:text-[#1f7d45] hover:shadow-premium-sm"
+                          >
+                            <MessageCircle size={16} className="text-[#25D366]" />
+                            <span className="hidden xl:inline">WhatsApp</span>
+                          </motion.a>
+                          <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => setSelected(row)}
+                            title="Ver detalles"
+                            className="flex h-10 w-10 items-center justify-center rounded-xl border border-ink/[0.06] bg-white text-ink/40 transition-all hover:border-aqua/30 hover:bg-aqua/5 hover:text-aqua hover:shadow-premium-sm"
+                          >
+                            <ExternalLink size={16} />
+                          </motion.button>
+                        </div>
+                      </td>
+                    </motion.tr>
+                  ))}
+                </AnimatePresence>
               </tbody>
           </table>
         </div>
@@ -462,30 +494,45 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
           </article>
         </div>
       ) : null}
-        <section className="mt-12">
-          <h2 className="mb-6 font-display text-2xl tracking-tight text-ink">Actividad reciente</h2>
-          <div className="rounded-3xl border border-white bg-white/60 p-6 shadow-premium backdrop-blur-sm">
-            <div className="space-y-5">
+        <motion.section 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mt-12"
+        >
+          <div className="mb-6">
+            <h2 className="font-display text-2xl tracking-tight text-ink">Actividad reciente</h2>
+            <p className="mt-1 text-sm text-ink/40">Últimos movimientos del panel</p>
+          </div>
+          <div className="rounded-[28px] border border-white/80 bg-white/60 p-5 shadow-premium backdrop-blur-sm">
+            <div className="space-y-2">
               {[
                 { text: "Lucia Fernandez creó solicitud", time: "hace 2 min" },
                 { text: "Martín Lopez fue marcado como contactado", time: "hace 15 min" },
                 { text: "Valentina Sosa fue aceptada", time: "hace 1 hora" },
                 { text: "Nueva solicitud recibida desde landing", time: "hace 3 horas" },
               ].map((item, idx) => (
-                <div key={idx} className="group flex items-center gap-5 rounded-2xl p-2 transition-colors hover:bg-white/40">
+                <motion.div 
+                  key={idx}
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="group flex items-center gap-4 rounded-xl p-2 transition-all hover:bg-white/40 cursor-default"
+                >
                   <div className="relative flex flex-col items-center self-stretch">
-                    <div className="z-10 mt-1.5 h-2.5 w-2.5 rounded-full bg-aqua shadow-[0_0_12px_rgba(100,181,173,0.8)]" />
-                    {idx !== 3 && <div className="absolute top-4 h-full w-[2px] bg-ink/[0.08]" />}
+                    <div className="z-10 mt-1.5 h-2 w-2 rounded-full bg-aqua shadow-[0_0_10px_rgba(100,181,173,0.6)]" />
+                    {idx !== 3 && <div className="absolute top-4 h-full w-[1px] bg-ink/[0.08]" />}
                   </div>
                   <div className="flex flex-1 items-center justify-between gap-4">
-                    <p className="text-sm font-medium text-ink/80 transition-colors group-hover:text-ink">{item.text}</p>
-                    <span className="text-[11px] font-semibold uppercase tracking-wider text-ink/40">{item.time}</span>
+                    <p className="text-sm font-medium text-ink/70 transition-colors group-hover:text-ink">{item.text}</p>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-ink/30 transition-colors group-hover:text-ink/50">{item.time}</span>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
-        </section>
+        </motion.section>
       </div>
     </main>
   );

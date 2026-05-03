@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import type { AdminAppointment, AppointmentStatus } from "@/lib/admin-appointments";
 import { ExternalLink, Loader2, LogOut, MessageCircle, Search } from "lucide-react";
+import { Counter } from "@/components/counter";
 
 type Filters = {
   status: "todos" | AppointmentStatus;
@@ -131,7 +132,7 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
           </div>
         </header>
 
-        <section className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+        <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
           {[
             { label: "Total", value: metrics.total },
             { label: "Nuevas", value: metrics.nuevo },
@@ -139,10 +140,17 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
             { label: "Aceptadas", value: metrics.aceptado },
             { label: "Rechazadas", value: metrics.rechazado }
           ].map((card) => (
-            <article key={card.label} className="group relative overflow-hidden rounded-2xl border border-white bg-white/60 p-6 shadow-premium-sm backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:bg-white hover:shadow-premium">
-              <div className="absolute inset-x-0 top-0 h-[4px] bg-aqua/10 transition-colors duration-500 group-hover:bg-aqua" />
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-ink/30">{card.label}</p>
-              <p className="mt-4 font-display text-5xl text-ink transition-transform duration-500 group-hover:scale-105">{card.value}</p>
+            <article key={card.label} className="group relative overflow-hidden rounded-[24px] border border-white/80 bg-white/70 p-7 shadow-premium-sm backdrop-blur-lg transition-all duration-500 hover:-translate-y-2 hover:bg-white hover:shadow-premium">
+              {/* Top Glow Line */}
+              <div className="absolute inset-x-0 top-0 h-[3px] bg-aqua/20 shadow-[0_0_15px_rgba(100,181,173,0)] transition-all duration-500 group-hover:bg-aqua group-hover:shadow-[0_0_15px_rgba(100,181,173,0.5)]" />
+              
+              <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-ink/30 transition-colors group-hover:text-aqua/60">{card.label}</p>
+              <div className="mt-4 flex items-baseline gap-1">
+                <Counter 
+                  value={card.value} 
+                  className="font-display text-5xl font-medium tracking-tight text-ink transition-transform duration-500 group-hover:scale-110" 
+                />
+              </div>
             </article>
           ))}
         </section>

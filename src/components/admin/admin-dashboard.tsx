@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { AdminAppointment, AppointmentStatus } from "@/lib/admin-appointments";
-import { ExternalLink, Loader2, LogOut, MessageCircle, Search } from "lucide-react";
+import { ExternalLink, Loader2, LogOut, MessageCircle, Search, Sparkles } from "lucide-react";
 import { Counter } from "@/components/counter";
 import {
   LineChart,
@@ -62,6 +62,7 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
   const [selected, setSelected] = useState<AdminAppointment | null>(null);
   const [statusUpdatingId, setStatusUpdatingId] = useState<string | null>(null);
   const [query, setQuery] = useState("");
+  const [activeTab, setActiveTab] = useState<"dashboard" | "settings">("dashboard");
   const [filters, setFilters] = useState<Filters>({
     status: "todos",
     specialty: "todas",
@@ -190,32 +191,71 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
       <div className="pointer-events-none absolute -right-[5%] top-[20%] h-[400px] w-[400px] rounded-full bg-aqua/3 blur-[100px]" />
 
       <div className="shell relative z-10">
-        <header className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <header className="mb-10 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-            <h1 className="font-display text-4xl tracking-tight text-ink">Panel Administrativo</h1>
-            <p className="mt-2 text-base text-ink/40">Gestión de solicitudes y seguimiento de pacientes</p>
+            <h1 className="font-display text-4xl tracking-tight text-ink">
+              {activeTab === "dashboard" ? "Panel Administrativo" : "Configuración"}
+            </h1>
+            <p className="mt-2 text-base text-ink/40">
+              {activeTab === "dashboard" 
+                ? "Gestión de solicitudes y seguimiento de pacientes" 
+                : "Personalización y ajustes del sistema"}
+            </p>
           </motion.div>
-          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} className="flex items-center gap-6">
-            <div className="hidden items-center gap-2 text-xs font-medium text-ink/40 sm:flex">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-aqua/50 opacity-75"></span>
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-aqua"></span>
-              </span>
-              Actividad en tiempo real
+          
+          <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
+            <nav className="flex rounded-full border border-ink/[0.05] bg-white/50 p-1 backdrop-blur-sm">
+              <button 
+                onClick={() => setActiveTab("dashboard")}
+                className={`relative px-6 py-2 text-sm font-semibold transition-colors ${activeTab === "dashboard" ? "text-white" : "text-ink/40 hover:text-ink/60"}`}
+              >
+                {activeTab === "dashboard" && (
+                  <motion.div layoutId="tab-bg" className="absolute inset-0 rounded-full bg-ink" transition={{ type: "spring", bounce: 0.2, duration: 0.6 }} />
+                )}
+                <span className="relative z-10">Dashboard</span>
+              </button>
+              <button 
+                onClick={() => setActiveTab("settings")}
+                className={`relative px-6 py-2 text-sm font-semibold transition-colors ${activeTab === "settings" ? "text-white" : "text-ink/40 hover:text-ink/60"}`}
+              >
+                {activeTab === "settings" && (
+                  <motion.div layoutId="tab-bg" className="absolute inset-0 rounded-full bg-ink" transition={{ type: "spring", bounce: 0.2, duration: 0.6 }} />
+                )}
+                <span className="relative z-10">Configuración</span>
+              </button>
+            </nav>
+
+            <div className="flex items-center gap-4">
+              <div className="hidden items-center gap-2 text-xs font-medium text-ink/40 lg:flex">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-aqua/50 opacity-75"></span>
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-aqua"></span>
+                </span>
+                Sistema activo
+              </div>
+              <motion.button 
+                whileHover={{ scale: 1.02, y: -1 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={handleLogout} 
+                className="flex items-center gap-2 rounded-full border border-ink/[0.08] bg-white px-5 py-2.5 text-sm font-medium text-ink/60 transition-all hover:border-ink/20 hover:text-ink hover:shadow-premium active:bg-ink/[0.02]"
+              >
+                <LogOut size={14} />
+                Cerrar sesión
+              </motion.button>
             </div>
-            <motion.button 
-              whileHover={{ scale: 1.02, y: -1 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={handleLogout} 
-              className="flex items-center gap-2 rounded-full border border-ink/[0.08] bg-white px-5 py-2.5 text-sm font-medium text-ink/60 transition-all hover:border-ink/20 hover:text-ink hover:shadow-premium active:bg-ink/[0.02]"
-            >
-              <LogOut size={14} />
-              Cerrar sesión
-            </motion.button>
-          </motion.div>
+          </div>
         </header>
 
-        <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+        <AnimatePresence mode="wait">
+          {activeTab === "dashboard" ? (
+            <motion.div
+              key="dashboard-view"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
           {[
             { label: "Total", value: metrics.total },
             { label: "Nuevas", value: metrics.nuevo },
@@ -546,6 +586,86 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
             </div>
           </div>
         </motion.section>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="settings-view"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="grid gap-8 lg:grid-cols-12"
+            >
+              <div className="space-y-8 lg:col-span-4">
+                <section className="rounded-[28px] border border-white/80 bg-white/70 p-7 shadow-premium-sm backdrop-blur-lg">
+                  <h3 className="mb-6 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-ink/40">
+                    <LogOut size={14} className="rotate-180" />
+                    Datos de acceso
+                  </h3>
+                  <div className="space-y-4">
+                    <div>
+                      <p className="text-[10px] font-semibold uppercase tracking-widest text-ink/30">Email administrador</p>
+                      <p className="mt-1 text-sm font-medium text-ink/70 italic">Gestionado por variables de entorno</p>
+                    </div>
+                    <button disabled className="w-full rounded-xl border border-ink/[0.05] bg-white/50 px-4 py-3 text-sm font-semibold text-ink/30 cursor-not-allowed">
+                      Cambiar contraseña
+                    </button>
+                    <div className="rounded-xl bg-ink/[0.02] p-4">
+                      <p className="text-[11px] leading-relaxed text-ink/40">
+                        Las credenciales se gestionan desde variables de entorno para mayor seguridad.
+                      </p>
+                    </div>
+                  </div>
+                </section>
+
+                <section className="rounded-[28px] border border-white/80 bg-white/70 p-7 shadow-premium-sm backdrop-blur-lg">
+                  <h3 className="mb-6 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-ink/40">
+                    <Sparkles size={14} />
+                    Preferencias
+                  </h3>
+                  <div className="space-y-4">
+                    {[
+                      { label: "Notificaciones WhatsApp", active: true },
+                      { label: "Recordatorios de seguimiento", active: false },
+                      { label: "Exportación automática CSV", active: true }
+                    ].map((pref) => (
+                      <div key={pref.label} className="flex items-center justify-between rounded-xl bg-white/40 p-3">
+                        <span className="text-sm font-medium text-ink/60">{pref.label}</span>
+                        <div className={`h-5 w-10 rounded-full transition-colors ${pref.active ? "bg-aqua" : "bg-ink/10"} relative`}>
+                          <div className={`absolute top-1 h-3 w-3 rounded-full bg-white transition-all ${pref.active ? "left-6" : "left-1"}`} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              </div>
+
+              <div className="lg:col-span-8">
+                <section className="rounded-[28px] border border-white/80 bg-white p-8 shadow-premium">
+                  <h3 className="mb-8 text-xs font-bold uppercase tracking-[0.2em] text-ink/40">Información del consultorio</h3>
+                  <div className="grid gap-8 sm:grid-cols-2">
+                    <div className="space-y-6">
+                      <SettingsField label="Nombre del consultorio" value="Onofri-Di Fulvio Odontología" />
+                      <SettingsField label="Teléfono principal" value="02954 80-3800" />
+                      <SettingsField label="WhatsApp" value="02954 80-3800" />
+                    </div>
+                    <div className="space-y-6">
+                      <SettingsField label="Dirección" value="Av. Uruguay 785, Santa Rosa, La Pampa" />
+                      <div>
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-ink/30">Horarios de atención</p>
+                        <div className="mt-3 space-y-2">
+                          {["Lun a Vie: 08:30 – 17:00 hs.", "Sábados y Domingos: Cerrado"].map(h => (
+                            <p key={h} className="text-sm font-medium text-ink/70">{h}</p>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </main>
   );
@@ -556,6 +676,17 @@ function Detail({ label, value, className = "" }: { label: string; value: string
     <div className={`rounded-2xl border border-ink/10 bg-ink/[0.02] p-4 ${className}`}>
       <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-ink/45">{label}</p>
       <p className="mt-1 text-sm leading-relaxed text-ink/80">{value}</p>
+    </div>
+  );
+}
+
+function SettingsField({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <p className="text-[10px] font-bold uppercase tracking-widest text-ink/30">{label}</p>
+      <div className="mt-2 rounded-xl border border-ink/[0.05] bg-white/50 px-4 py-3">
+        <p className="text-sm font-medium text-ink/70">{value}</p>
+      </div>
     </div>
   );
 }

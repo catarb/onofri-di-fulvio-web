@@ -25,6 +25,22 @@ type Filters = {
   to: string;
 };
 
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (active && payload && payload.length > 0) {
+    const data = payload[0].value;
+    return (
+      <div className="rounded-2xl border border-white/60 bg-white/90 p-3 shadow-premium backdrop-blur-md">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-ink/40 mb-1">{label || "Dato"}</p>
+        <p className="text-base font-display font-bold text-ink">
+          {data ?? 0} 
+          <span className="ml-1.5 text-[10px] font-medium uppercase tracking-wider text-ink/30">solicitudes</span>
+        </p>
+      </div>
+    );
+  }
+  return null;
+};
+
 const statusOptions: Array<{ value: Filters["status"]; label: string }> = [
   { value: "todos", label: "Todos" },
   { value: "nuevo", label: "Nuevas" },
@@ -168,7 +184,7 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#f8f8f6] pb-16 pt-8">
+    <main className="relative min-h-screen bg-[#f8f8f6] pb-16 pt-8">
       {/* Background Decor */}
       <div className="pointer-events-none absolute -left-[10%] -top-[10%] h-[500px] w-[500px] rounded-full bg-aqua/5 blur-[120px]" />
       <div className="pointer-events-none absolute -right-[5%] top-[20%] h-[400px] w-[400px] rounded-full bg-aqua/3 blur-[100px]" />
@@ -248,32 +264,38 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
                 <LineChart data={analyticsData.dailyRequests}>
                   <defs>
                     <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#64b5ad" stopOpacity={0.1}/>
+                      <stop offset="5%" stopColor="#64b5ad" stopOpacity={0.15}/>
                       <stop offset="95%" stopColor="#64b5ad" stopOpacity={0}/>
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#28282908" />
+                  <CartesianGrid strokeDasharray="8 8" vertical={false} stroke="#28282905" />
                   <XAxis 
                     dataKey="name" 
                     axisLine={false} 
                     tickLine={false} 
-                    tick={{ fontSize: 10, fill: "#28282950", fontWeight: 500 }}
-                    dy={12}
+                    tick={{ fontSize: 10, fill: "#28282930", fontWeight: 600 }}
+                    dy={15}
                   />
-                  <YAxis hide />
+                  <YAxis hide domain={['auto', 'auto']} />
                   <Tooltip 
-                    cursor={{ stroke: "#64b5ad30", strokeWidth: 2 }}
-                    contentStyle={{ borderRadius: "16px", border: "none", boxShadow: "0 10px 30px rgba(0,0,0,0.08)", fontSize: "12px", background: "white" }}
-                    itemStyle={{ color: "#64b5ad", fontWeight: "bold" }}
+                    content={<CustomTooltip />}
+                    cursor={{ stroke: "#64b5ad20", strokeWidth: 1 }}
                   />
                   <Line 
                     type="monotone" 
                     dataKey="value" 
-                    stroke="#59a69e" 
-                    strokeWidth={4} 
-                    dot={{ r: 5, fill: "#59a69e", strokeWidth: 3, stroke: "#fff" }}
-                    activeDot={{ r: 7, fill: "#59a69e", strokeWidth: 0 }}
-                    animationDuration={1500}
+                    stroke="#64b5ad" 
+                    strokeWidth={3} 
+                    strokeLinecap="round"
+                    dot={{ r: 0 }}
+                    activeDot={{ 
+                      r: 6, 
+                      fill: "#64b5ad", 
+                      strokeWidth: 4, 
+                      stroke: "rgba(100, 181, 173, 0.2)",
+                    }}
+                    animationDuration={2000}
+                    animationEasing="ease-in-out"
                   />
                 </LineChart>
               </ResponsiveContainer>
@@ -297,16 +319,16 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
                     type="category" 
                     axisLine={false} 
                     tickLine={false} 
-                    tick={{ fontSize: 11, fill: "#28282980", fontWeight: 500 }}
+                    tick={{ fontSize: 11, fill: "#28282970", fontWeight: 500 }}
                     width={100}
                   />
                   <Tooltip 
-                    cursor={{ fill: "rgba(100, 181, 173, 0.05)" }} 
-                    contentStyle={{ borderRadius: "16px", border: "none", boxShadow: "0 10px 30px rgba(0,0,0,0.08)", fontSize: "12px" }} 
+                    content={<CustomTooltip />}
+                    cursor={{ fill: "rgba(100, 181, 173, 0.03)" }} 
                   />
-                  <Bar dataKey="value" radius={[0, 8, 8, 0]} barSize={24} animationDuration={1500}>
+                  <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={18} animationDuration={2000}>
                     {analyticsData.specialtyData.map((_, index) => (
-                      <Cell key={index} fill={index === 0 ? "#59a69e" : "#64b5ad50"} />
+                      <Cell key={index} fill={index === 0 ? "#64b5ad" : "#64b5ad25"} />
                     ))}
                   </Bar>
                 </BarChart>
@@ -400,71 +422,62 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
                 </tr>
               </thead>
               <tbody className="divide-y divide-ink/[0.04] bg-white">
-                <AnimatePresence mode="popLayout">
-                  {visibleAppointments.map((row, idx) => (
-                    <motion.tr 
-                      key={row.id}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ delay: Math.min(idx * 0.05, 0.5), duration: 0.3 }}
-                      className="group transition-colors duration-200 even:bg-[#fcfcfb]/40 hover:bg-[#f1f9f8]"
-                    >
-                      <td className="px-6 py-6 text-ink/50">{row.dateLabel}</td>
-                      <td className="px-6 py-6">
-                        <span className="text-base font-bold tracking-tight text-ink">{row.fullName}</span>
-                      </td>
-                      <td className="px-6 py-6 font-mono text-xs tracking-tighter text-ink/60">{row.phone}</td>
-                      <td className="px-6 py-6 text-ink/60">{row.specialtyLabel}</td>
-                      <td className="px-6 py-6 text-ink/60">{row.coverageName || "Particular"}</td>
-                      <td className="max-w-[180px] truncate px-6 py-6 text-ink/40 italic">{row.notes || "-"}</td>
-                      <td className="px-6 py-6">
-                        <div className="flex items-center gap-3">
-                          {statusUpdatingId === row.id ? (
-                            <div className="flex h-5 w-5 items-center justify-center">
-                              <Loader2 className="animate-spin text-aqua" size={14} />
-                            </div>
-                          ) : null}
-                          <select
-                            value={row.status}
-                            onChange={(e) => void handleStatusChange(row.id, e.target.value as AppointmentStatus)}
-                            className={`cursor-pointer rounded-xl border px-4 py-2 text-[11px] font-bold uppercase tracking-wider outline-none transition-all duration-300 focus:ring-4 focus:ring-aqua/10 ${statusBadgeClass[row.status]}`}
-                          >
-                            <option value="nuevo">nuevo</option>
-                            <option value="contactado">contactado</option>
-                            <option value="aceptado">aceptado</option>
-                            <option value="rechazado">rechazado</option>
-                          </select>
-                        </div>
-                      </td>
-                      <td className="px-6 py-6">
-                        <div className="flex items-center justify-end gap-3">
-                          <motion.a
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            href={buildPatientWhatsappUrl(row.phone, row.fullName)}
-                            target="_blank"
-                            rel="noreferrer"
-                            title="Contactar por WhatsApp"
-                            className="flex h-10 items-center gap-2 rounded-xl border border-ink/[0.06] bg-white px-4 text-xs font-semibold text-ink/60 transition-all hover:border-[#25D366]/30 hover:bg-[#25D366]/5 hover:text-[#1f7d45] hover:shadow-premium-sm"
-                          >
-                            <MessageCircle size={16} className="text-[#25D366]" />
-                            <span className="hidden xl:inline">WhatsApp</span>
-                          </motion.a>
-                          <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={() => setSelected(row)}
-                            title="Ver detalles"
-                            className="flex h-10 w-10 items-center justify-center rounded-xl border border-ink/[0.06] bg-white text-ink/40 transition-all hover:border-aqua/30 hover:bg-aqua/5 hover:text-aqua hover:shadow-premium-sm"
-                          >
-                            <ExternalLink size={16} />
-                          </motion.button>
-                        </div>
-                      </td>
-                    </motion.tr>
-                  ))}
-                </AnimatePresence>
+                {visibleAppointments.map((row) => (
+                  <tr key={row.id} className="group transition-colors duration-200 even:bg-[#fcfcfb]/40 hover:bg-[#f1f9f8]">
+                    <td className="px-6 py-6 text-ink/50">{row.dateLabel}</td>
+                    <td className="px-6 py-6">
+                      <span className="text-base font-bold tracking-tight text-ink">{row.fullName}</span>
+                    </td>
+                    <td className="px-6 py-6 font-mono text-xs tracking-tighter text-ink/60">{row.phone}</td>
+                    <td className="px-6 py-6 text-ink/60">{row.specialtyLabel}</td>
+                    <td className="px-6 py-6 text-ink/60">{row.coverageName || "Particular"}</td>
+                    <td className="max-w-[180px] truncate px-6 py-6 text-ink/40 italic">{row.notes || "-"}</td>
+                    <td className="px-6 py-6">
+                      <div className="flex items-center gap-3">
+                        {statusUpdatingId === row.id ? (
+                          <div className="flex h-5 w-5 items-center justify-center">
+                            <Loader2 className="animate-spin text-aqua" size={14} />
+                          </div>
+                        ) : null}
+                        <select
+                          value={row.status}
+                          onChange={(e) => void handleStatusChange(row.id, e.target.value as AppointmentStatus)}
+                          className={`cursor-pointer rounded-xl border px-4 py-2 text-[11px] font-bold uppercase tracking-wider outline-none transition-all duration-300 focus:ring-4 focus:ring-aqua/10 ${statusBadgeClass[row.status]}`}
+                        >
+                          <option value="nuevo">nuevo</option>
+                          <option value="contactado">contactado</option>
+                          <option value="aceptado">aceptado</option>
+                          <option value="rechazado">rechazado</option>
+                        </select>
+                      </div>
+                    </td>
+                    <td className="px-6 py-6">
+                      <div className="flex items-center justify-end gap-3">
+                        <motion.a
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          href={buildPatientWhatsappUrl(row.phone, row.fullName)}
+                          target="_blank"
+                          rel="noreferrer"
+                          title="Contactar por WhatsApp"
+                          className="flex h-10 items-center gap-2 rounded-xl border border-ink/[0.06] bg-white px-4 text-xs font-semibold text-ink/60 transition-all hover:border-[#25D366]/30 hover:bg-[#25D366]/5 hover:text-[#1f7d45] hover:shadow-premium-sm"
+                        >
+                          <MessageCircle size={16} className="text-[#25D366]" />
+                          <span className="hidden xl:inline">WhatsApp</span>
+                        </motion.a>
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => setSelected(row)}
+                          title="Ver detalles"
+                          className="flex h-10 w-10 items-center justify-center rounded-xl border border-ink/[0.06] bg-white text-ink/40 transition-all hover:border-aqua/30 hover:bg-aqua/5 hover:text-aqua hover:shadow-premium-sm"
+                        >
+                          <ExternalLink size={16} />
+                        </motion.button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
           </table>
         </div>

@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { AdminAppointment, AppointmentStatus } from "@/lib/admin-appointments";
-import { ExternalLink, Loader2, LogOut, MessageCircle, Search, Sparkles } from "lucide-react";
+import { ExternalLink, Loader2, LogOut, MessageCircle, Search, Sparkles, FileDown } from "lucide-react";
 import { Counter } from "@/components/counter";
 import {
   LineChart,
@@ -69,6 +69,50 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
     from: "",
     to: ""
   });
+  const [csvExportEnabled, setCsvExportEnabled] = useState(false);
+
+  // Load preferences from localStorage on mount
+  useMemo(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("admin_csv_export_enabled");
+      if (saved === "true") setCsvExportEnabled(true);
+    }
+  }, []);
+
+  const handleToggleCsv = (val: boolean) => {
+    setCsvExportEnabled(val);
+    localStorage.setItem("admin_csv_export_enabled", String(val));
+  };
+
+  const exportToCSV = () => {
+    if (visibleAppointments.length === 0) return;
+
+    const headers = ["Fecha", "Nombre", "Teléfono", "Especialidad", "Prepaga", "Observaciones", "Estado"];
+    const rows = visibleAppointments.map(app => [
+      app.dateLabel,
+      app.fullName,
+      app.phone,
+      app.specialtyLabel,
+      app.coverageName || "Particular",
+      app.notes || "-",
+      app.status
+    ]);
+
+    const csvContent = [
+      headers.join(","),
+      ...rows.map(r => r.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(","))
+    ].join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `solicitudes-turno-${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const specialties = useMemo(() => {
     const unique = new Map<string, string>();
@@ -445,6 +489,19 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
               className="w-full rounded-[14px] border border-ink/[0.06] bg-white py-2.5 pl-16 pr-3 text-sm text-ink outline-none transition-all focus:border-aqua/40 focus:ring-4 focus:ring-aqua/10"
             />
           </div>
+          {csvExportEnabled && (
+            <motion.button
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={exportToCSV}
+              className="flex items-center justify-center gap-2 rounded-[14px] border border-aqua/20 bg-white px-4 py-2.5 text-sm font-semibold text-aqua transition-all hover:bg-aqua/5 hover:shadow-premium-sm"
+            >
+              <FileDown size={16} />
+              Exportar CSV
+            </motion.button>
+          )}
           </div>
         </section>
 
@@ -629,11 +686,14 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
                     {[
                       { label: "Notificaciones WhatsApp", active: true },
                       { label: "Recordatorios de seguimiento", active: false },
-                      { label: "Exportación automática CSV", active: true }
+                      { label: "Exportación automática CSV", active: csvExportEnabled, id: "csv" }
                     ].map((pref) => (
                       <div key={pref.label} className="flex items-center justify-between rounded-xl bg-white/40 p-3">
                         <span className="text-sm font-medium text-ink/60">{pref.label}</span>
-                        <div className={`h-5 w-10 cursor-pointer rounded-full transition-colors ${pref.active ? "bg-aqua" : "bg-ink/10"} relative`}>
+                        <div 
+                          onClick={() => pref.id === "csv" && handleToggleCsv(!pref.active)}
+                          className={`h-5 w-10 cursor-pointer rounded-full transition-colors ${pref.active ? "bg-aqua" : "bg-ink/10"} relative`}
+                        >
                           <div className={`absolute top-1 h-3 w-3 rounded-full bg-white transition-all ${pref.active ? "left-6" : "left-1"}`} />
                         </div>
                       </div>

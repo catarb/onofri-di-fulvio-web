@@ -1,4 +1,4 @@
-﻿@tailwind base;
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -10,6 +10,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    cursor: default;
   }
 
   body {
@@ -18,8 +19,21 @@
 
   a,
   button,
+  select,
+  input[type="checkbox"],
+  input[type="radio"],
   [role="button"] {
     cursor: pointer;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="search"],
+  input[type="date"],
+  input[type="password"],
+  textarea {
+    cursor: text;
   }
 }
 

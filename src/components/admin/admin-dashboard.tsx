@@ -269,7 +269,7 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1, duration: 0.5, ease: "easeOut" }}
               whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(0,0,0,0.04)" }}
-              className="group relative overflow-hidden rounded-[24px] border border-white/80 bg-white/70 p-7 shadow-premium-sm backdrop-blur-lg transition-colors duration-500 hover:bg-white"
+              className="group relative cursor-pointer overflow-hidden rounded-[24px] border border-white/80 bg-white/70 p-7 shadow-premium-sm backdrop-blur-lg transition-colors duration-500 hover:bg-white"
             >
               {/* Top Glow Line */}
               <div className="absolute inset-x-0 top-0 h-[3px] bg-aqua/20 shadow-[0_0_15px_rgba(100,181,173,0)] transition-all duration-500 group-hover:bg-aqua group-hover:shadow-[0_0_15px_rgba(100,181,173,0.5)]" />
@@ -291,7 +291,7 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
           transition={{ delay: 0.5, duration: 0.6 }}
           className="mt-8 grid gap-6 lg:grid-cols-2"
         >
-          <article className="rounded-[24px] border border-white/80 bg-white/70 p-7 shadow-premium-sm backdrop-blur-lg transition-shadow hover:shadow-premium">
+          <article className="rounded-[24px] border border-white/80 bg-white/70 p-7 shadow-premium-sm backdrop-blur-lg transition-shadow hover:shadow-premium cursor-pointer">
             <div className="mb-8 flex items-center justify-between">
               <div>
                 <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-ink/40">Solicitudes (7 días)</h3>
@@ -333,16 +333,18 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
                       fill: "#64b5ad", 
                       strokeWidth: 4, 
                       stroke: "rgba(100, 181, 173, 0.2)",
+                      style: { cursor: 'pointer' }
                     }}
                     animationDuration={2000}
                     animationEasing="ease-in-out"
+                    className="cursor-pointer"
                   />
                 </LineChart>
               </ResponsiveContainer>
             </div>
           </article>
 
-          <article className="rounded-[24px] border border-white/80 bg-white/70 p-7 shadow-premium-sm backdrop-blur-lg transition-shadow hover:shadow-premium">
+          <article className="rounded-[24px] border border-white/80 bg-white/70 p-7 shadow-premium-sm backdrop-blur-lg transition-shadow hover:shadow-premium cursor-pointer">
             <div className="mb-8 flex items-center justify-between">
               <div>
                 <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-ink/40">Especialidades</h3>
@@ -366,7 +368,7 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
                     content={<CustomTooltip />}
                     cursor={{ fill: "rgba(100, 181, 173, 0.03)" }} 
                   />
-                  <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={18} animationDuration={2000}>
+                  <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={18} animationDuration={2000} className="cursor-pointer">
                     {analyticsData.specialtyData.map((_, index) => (
                       <Cell key={index} fill={index === 0 ? "#64b5ad" : "#64b5ad25"} />
                     ))}
@@ -463,7 +465,7 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
               </thead>
               <tbody className="divide-y divide-ink/[0.04] bg-white">
                 {visibleAppointments.map((row) => (
-                  <tr key={row.id} className="group transition-colors duration-200 even:bg-[#fcfcfb]/40 hover:bg-[#f1f9f8]">
+                  <tr key={row.id} className="group cursor-pointer transition-colors duration-200 even:bg-[#fcfcfb]/40 hover:bg-[#f1f9f8]">
                     <td className="px-6 py-6 text-ink/50">{row.dateLabel}</td>
                     <td className="px-6 py-6">
                       <span className="text-base font-bold tracking-tight text-ink">{row.fullName}</span>
@@ -571,7 +573,7 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.1 }}
-                  className="group flex items-center gap-4 rounded-xl p-2 transition-all hover:bg-white/40 cursor-default"
+                  className="group flex items-center gap-4 rounded-xl p-2 transition-all hover:bg-white/40 cursor-pointer"
                 >
                   <div className="relative flex flex-col items-center self-stretch">
                     <div className="z-10 mt-1.5 h-2 w-2 rounded-full bg-aqua shadow-[0_0_10px_rgba(100,181,173,0.6)]" />
@@ -631,7 +633,7 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
                     ].map((pref) => (
                       <div key={pref.label} className="flex items-center justify-between rounded-xl bg-white/40 p-3">
                         <span className="text-sm font-medium text-ink/60">{pref.label}</span>
-                        <div className={`h-5 w-10 rounded-full transition-colors ${pref.active ? "bg-aqua" : "bg-ink/10"} relative`}>
+                        <div className={`h-5 w-10 cursor-pointer rounded-full transition-colors ${pref.active ? "bg-aqua" : "bg-ink/10"} relative`}>
                           <div className={`absolute top-1 h-3 w-3 rounded-full bg-white transition-all ${pref.active ? "left-6" : "left-1"}`} />
                         </div>
                       </div>
@@ -673,7 +675,7 @@ export function AdminDashboard({ initialAppointments }: { initialAppointments: A
 
 function Detail({ label, value, className = "" }: { label: string; value: string; className?: string }) {
   return (
-    <div className={`rounded-2xl border border-ink/10 bg-ink/[0.02] p-4 ${className}`}>
+    <div className={`rounded-2xl border border-ink/10 bg-ink/[0.02] p-4 cursor-pointer ${className}`}>
       <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-ink/45">{label}</p>
       <p className="mt-1 text-sm leading-relaxed text-ink/80">{value}</p>
     </div>
@@ -684,7 +686,7 @@ function SettingsField({ label, value }: { label: string; value: string }) {
   return (
     <div>
       <p className="text-[10px] font-bold uppercase tracking-widest text-ink/30">{label}</p>
-      <div className="mt-2 rounded-xl border border-ink/[0.05] bg-white/50 px-4 py-3">
+      <div className="mt-2 rounded-xl border border-ink/[0.05] bg-white/50 px-4 py-3 cursor-pointer">
         <p className="text-sm font-medium text-ink/70">{value}</p>
       </div>
     </div>

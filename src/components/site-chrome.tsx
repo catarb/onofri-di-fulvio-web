@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
@@ -27,17 +27,26 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
       <header className="fixed inset-x-0 top-0 z-50 transition-all duration-500">
         <div className={`shell transition-all duration-500 ${isScrolled ? "pt-2" : "pt-4"}`}>
           <div
-            className={`flex items-center justify-between rounded-full border px-4 shadow-premium transition-all duration-500 ${
-              isScrolled
+            className={`flex items-center justify-between rounded-full border px-4 shadow-premium transition-all duration-500 ${isScrolled
                 ? "border-white/85 bg-white/72 py-2 shadow-[0_18px_44px_-20px_rgba(15,23,32,0.42)] backdrop-blur-2xl"
                 : "glass border-white/70 py-2.5 backdrop-blur-md"
-            }`}
+              }`}
           >
-            <Link href="/" className="group flex cursor-pointer items-center gap-2">
-              <div className="relative h-10 w-10 overflow-hidden rounded-full border border-white/80 bg-white/70 shadow-sm">
-                <Image src="/logo-adultos.png" alt="Logo Onofri-Di Fulvio" fill className="object-contain p-1.5" sizes="40px" priority />
+            <Link href="/" className="group flex cursor-pointer items-center gap-3">
+              <div className="relative h-11 w-11 overflow-hidden rounded-full border border-white/80 bg-white shadow-sm transition-transform duration-300 group-hover:scale-105">
+                <Image
+                  src="/icon.png?v=1"
+                  alt="Logo Onofri-Di Fulvio"
+                  fill
+                  className="rounded-full object-contain p-1"
+                  sizes="44px"
+                  priority
+                />
               </div>
-              <span className="font-display text-xl tracking-tight text-ink">Onofri-Di Fulvio Odontología</span>
+              <div className="flex flex-col">
+                <span className="font-display text-lg leading-none tracking-tight text-ink whitespace-nowrap sm:text-xl">Onofri-Di Fulvio</span>
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-aqua sm:hidden">Odontología</span>
+              </div>
             </Link>
 
             <nav className="hidden items-center gap-6 text-sm font-medium text-ink/70 lg:flex">
@@ -88,7 +97,15 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
         <div className="shell">
           <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
             <div>
-              <Link href="/" className="font-display text-2xl tracking-tight">Onofri-Di Fulvio Odontología</Link>
+              <Link href="/" className="inline-block">
+                <Image
+                  src="/logo-adultos-hd.png"
+                  alt="Onofri-Di Fulvio Odontología"
+                  width={240}
+                  height={80}
+                  className="h-16 w-auto object-contain brightness-0 invert opacity-80 transition-opacity hover:opacity-100"
+                />
+              </Link>
               <p className="mt-6 max-w-sm leading-relaxed text-white/60">
                 Odontología moderna, cercana y precisa. Un enfoque humano para el cuidado de tu salud bucal en un espacio diseñado para tu bienestar.
               </p>

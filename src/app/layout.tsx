@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { Fraunces, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { SiteChrome } from "@/components/site-chrome";
@@ -20,9 +20,13 @@ export const metadata: Metadata = {
   description:
     "Centro odontológico moderno con enfoque humano, especialidades integrales y solicitud de turno online.",
   icons: {
-    icon: "/logo-adultos.png",
-    shortcut: "/logo-adultos.png",
-    apple: "/logo-adultos.png"
+    icon: [
+      { url: "/icon.png?v=1", sizes: "any", type: "image/png" }
+    ],
+    shortcut: "/icon.png?v=1",
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }
+    ]
   },
   openGraph: {
     title: "Onofri-Di Fulvio",

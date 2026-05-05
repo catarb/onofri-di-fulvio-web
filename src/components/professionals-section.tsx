@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -102,11 +102,11 @@ export function ProfessionalsSection() {
                     <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-white/10 via-white/0 to-white/20">
                       <div className="flex h-20 w-20 items-center justify-center rounded-full border border-white/80 bg-white/75 shadow-premium backdrop-blur-sm">
                         <Image
-                          src="/logo-adultos.png"
+                          src="/isotipo-adultos.png"
                           alt="Onofri-Di Fulvio"
                           width={48}
                           height={48}
-                          className="object-contain"
+                          className="object-contain p-1"
                         />
                       </div>
                     </div>

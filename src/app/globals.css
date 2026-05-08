@@ -11,10 +11,15 @@
   html {
     scroll-behavior: smooth;
     cursor: default;
+    height: 100%;
+    min-height: 100%;
+    overscroll-behavior-y: none;
   }
 
   body {
     @apply selection:bg-ink selection:text-white;
+    min-height: 100%;
+    overscroll-behavior-y: none;
   }
 
   a,
@@ -34,6 +39,14 @@
   input[type="password"],
   textarea {
     cursor: text;
+  }
+}
+
+@supports (min-height: 100dvh) {
+  @layer base {
+    body {
+      min-height: 100dvh;
+    }
   }
 }
 

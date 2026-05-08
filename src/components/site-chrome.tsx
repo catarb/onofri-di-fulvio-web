@@ -95,7 +95,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
 
       <main>{children}</main>
 
-      <footer className="mt-14 border-t border-ink/10 bg-ink pt-9 pb-[calc(2.25rem+env(safe-area-inset-bottom))] text-white/90 sm:py-14">
+      <footer className="mt-14 border-t border-ink/10 bg-ink py-9 text-white/90 sm:py-14">
         <div className="shell">
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
             <div className="mx-auto w-full max-w-[24rem] text-center md:mx-0 md:max-w-none md:text-left">

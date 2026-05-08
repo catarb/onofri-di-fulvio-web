@@ -53,23 +53,26 @@ const specialties = [
 
 export function AboutSection() {
   return (
-    <section id="nosotros" className="bg-white py-20 md:py-24">
+    <section
+      id="nosotros"
+      className="scroll-mt-8 bg-white py-12 sm:scroll-mt-10 sm:py-14 lg:scroll-mt-12 lg:pb-18 lg:pt-8"
+    >
       <div className="shell">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
-          className="grid items-stretch gap-14 lg:grid-cols-[1fr_0.82fr]"
+          className="grid items-stretch gap-12 lg:grid-cols-[1fr_0.82fr]"
         >
           {/* IZQUIERDA */}
           <motion.div
             variants={containerVariants}
-            className="flex h-full flex-col justify-between gap-10"
+            className="flex h-full flex-col justify-between gap-9"
           >
-            <div className="space-y-8">
+            <div className="space-y-7 max-sm:text-center">
               <motion.div variants={itemVariants}>
-                <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#282829]/55">
+                <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#282829]/55">
                   Nuestra Identidad
                 </p>
 
@@ -84,7 +87,7 @@ export function AboutSection() {
                 </p>
               </motion.div>
 
-              <motion.div variants={itemVariants} className="flex items-center gap-5">
+              <motion.div variants={itemVariants} className="flex items-center gap-5 max-sm:justify-center">
                 <div className="h-px flex-1 bg-[#282829]/10" />
                 <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[#282829]/35">
                   Más de 20 años de experiencia
@@ -94,7 +97,7 @@ export function AboutSection() {
 
               <motion.div
                 variants={itemVariants}
-                className="relative overflow-hidden rounded-[34px] bg-[#f8f9f9] p-8 shadow-[0_22px_50px_rgba(40,40,41,0.10)]"
+                className="relative overflow-hidden rounded-[34px] bg-[#f8f9f9] p-7 shadow-[0_22px_46px_rgba(40,40,41,0.10)]"
               >
                 <div className="absolute left-0 top-0 h-full w-[6px] rounded-r-full bg-[#282829]" />
 
@@ -102,7 +105,7 @@ export function AboutSection() {
                   ”
                 </div>
 
-                <p className="relative max-w-[520px] text-2xl italic leading-[1.18] text-[#282829]/70">
+                <p className="relative mx-auto max-w-[520px] text-[1.72rem] italic leading-[1.18] text-[#282829]/70 max-sm:text-center">
                   “Creemos que la base de un buen tratamiento es la{" "}
                   <span className="font-semibold not-italic text-[#282829] underline decoration-[#282829]/25 underline-offset-4">
                     confianza
@@ -115,9 +118,9 @@ export function AboutSection() {
                   ”
                 </p>
 
-                <div className="relative mt-8 grid gap-4 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#282829]/35 sm:grid-cols-3">
+                <div className="relative mt-7 grid gap-3.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#282829]/35 sm:grid-cols-3">
                   {specialties.map((item) => (
-                    <div key={item} className="flex items-center gap-2">
+                    <div key={item} className="flex items-center gap-2 max-sm:justify-center">
                       <CheckCircle2 className="h-3.5 w-3.5 text-[#282829]/30" />
                       <span>{item}</span>
                     </div>
@@ -125,42 +128,16 @@ export function AboutSection() {
                 </div>
               </motion.div>
             </div>
-
-            <motion.div
-              variants={itemVariants}
-              className="grid gap-8 md:grid-cols-3"
-            >
-              {values.map((value) => {
-                const Icon = value.icon;
-
-                return (
-                  <div key={value.title} className="space-y-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white shadow-[0_16px_40px_rgba(40,40,41,0.08)]">
-                      <Icon className="h-5 w-5 text-[#282829]/45" />
-                    </div>
-
-                    <div>
-                      <h3 className="font-display text-lg leading-tight text-[#282829]">
-                        {value.title}
-                      </h3>
-                      <p className="mt-3 text-sm leading-6 text-[#282829]/55">
-                        {value.text}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
-            </motion.div>
           </motion.div>
 
           {/* DERECHA */}
           <motion.div
             variants={containerVariants}
-            className="flex h-full flex-col justify-between gap-6"
+            className="flex h-full flex-col gap-6"
           >
             <motion.div
               variants={itemVariants}
-              className="relative h-[430px] overflow-hidden rounded-[34px] shadow-[0_24px_60px_rgba(40,40,41,0.12)]"
+              className="relative h-[360px] overflow-hidden rounded-[34px] shadow-[0_24px_54px_rgba(40,40,41,0.12)] lg:h-[calc(100vh-100px)] lg:min-h-[540px] lg:max-h-[820px]"
             >
               <Image
                 src="/Consultorio_1.webp"
@@ -171,10 +148,53 @@ export function AboutSection() {
                 priority
               />
             </motion.div>
+          </motion.div>
+        </motion.div>
 
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          className="mt-8 grid items-stretch gap-6 lg:grid-cols-[1fr_0.82fr]"
+        >
+          <motion.div
+            variants={itemVariants}
+            className="rounded-[30px] bg-[#f8f9f9] p-6 shadow-[0_18px_42px_rgba(40,40,41,0.10)] max-sm:text-center"
+          >
+            <p className="mb-5 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#282829]/40">
+              Nuestros pilares
+            </p>
+
+            <div className="grid gap-4 md:grid-cols-3">
+              {values.map((value) => {
+                const Icon = value.icon;
+
+                return (
+                  <div
+                    key={value.title}
+                    className="rounded-[22px] border border-white/80 bg-white p-4 shadow-[0_10px_22px_rgba(40,40,41,0.06)]"
+                  >
+                    <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#f4f6f6] shadow-[0_10px_22px_rgba(40,40,41,0.07)]">
+                      <Icon className="h-5 w-5 text-[#282829]/45" />
+                    </div>
+
+                    <h3 className="mt-3 font-display text-[1.05rem] leading-tight text-[#282829]">
+                      {value.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-6 text-[#282829]/55">
+                      {value.text}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </motion.div>
+
+          <motion.div variants={containerVariants} className="flex flex-col gap-4">
             <motion.div
               variants={itemVariants}
-              className="relative h-[230px] overflow-hidden rounded-[30px] shadow-[0_20px_45px_rgba(40,40,41,0.10)]"
+              className="relative h-[220px] overflow-hidden rounded-[30px] shadow-[0_20px_42px_rgba(40,40,41,0.10)]"
             >
               <Image
                 src="/Consultorio_2.webp"
@@ -187,15 +207,13 @@ export function AboutSection() {
 
             <motion.div
               variants={itemVariants}
-              className="rounded-[30px] bg-[#f8f9f9] p-7 shadow-[0_18px_45px_rgba(40,40,41,0.10)]"
+              className="rounded-[30px] bg-[#f8f9f9] p-6 shadow-[0_18px_42px_rgba(40,40,41,0.10)] max-sm:text-center"
             >
-              <div className="mb-5 h-[2px] w-12 rounded-full bg-[#282829]/15" />
-
+              <div className="mb-4 h-[2px] w-12 rounded-full bg-[#282829]/15" />
               <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#282829]/40">
                 Misión médica
               </p>
-
-              <p className="mt-4 max-w-sm text-sm leading-6 text-[#282829]/60">
+              <p className="mt-3 max-w-sm text-sm leading-6 text-[#282829]/60">
                 Brindamos tratamientos de{" "}
                 <span className="font-semibold text-[#282829]">
                   alta calidad
@@ -209,4 +227,6 @@ export function AboutSection() {
     </section>
   );
 }
+
+
 

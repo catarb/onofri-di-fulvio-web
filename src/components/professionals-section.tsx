@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -11,11 +11,13 @@ type ProfileStyle = {
   founder: string;
   bio: string;
   chips: string[];
-  imageSrc: string;
+  imageSrc?: string;
   imageAlt: string;
   toneClass: string;
   icon: React.ReactNode;
 };
+
+const ENABLE_PROFESSIONAL_PHOTOS = false;
 
 const profileStyles: Record<string, ProfileStyle> = {
   "dra-onofri": {
@@ -64,7 +66,7 @@ function ProfessionalWatermark() {
 
 export function ProfessionalsSection() {
   return (
-    <section id="profesionales" className="section-space">
+    <section id="profesionales" className="section-space py-12 sm:py-16 lg:py-20">
       <div className="shell">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -79,9 +81,16 @@ export function ProfessionalsSection() {
           />
         </motion.div>
 
-        <div className="mt-14 grid gap-8 md:grid-cols-2 lg:gap-10">
+        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:mt-12 lg:gap-8">
           {professionals.map((prof, index) => {
             const style = profileStyles[prof.slug];
+            const initials = prof.name
+              .split(" ")
+              .filter(Boolean)
+              .slice(0, 2)
+              .map((part) => part[0]?.toUpperCase() || "")
+              .join("");
+            const shouldRenderPhoto = ENABLE_PROFESSIONAL_PHOTOS && !!style.imageSrc;
 
             return (
               <motion.a
@@ -91,10 +100,10 @@ export function ProfessionalsSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: index * 0.06 }}
-                className="group glass premium-card flex h-full cursor-pointer flex-col rounded-[42px] p-6 sm:p-7 lg:p-8"
+                className="group glass premium-card flex h-full cursor-pointer flex-col rounded-[42px] p-5 sm:p-6 lg:p-6"
               >
-                <div className="grid items-start gap-6 sm:gap-7 lg:grid-cols-[184px_1fr] lg:gap-8">
-                  <div className={`relative aspect-[4/5] w-full overflow-hidden rounded-[30px] border shadow-[0_18px_45px_rgba(15,23,32,0.14)] ${style.toneClass}`}>
+                <div className="grid items-start gap-5 sm:gap-6 lg:grid-cols-[168px_1fr] lg:gap-6">
+                  <div className={`relative aspect-[4/5] w-full overflow-hidden rounded-[28px] border shadow-[0_14px_34px_rgba(15,23,32,0.12)] ${style.toneClass}`}>
                     <div className="pointer-events-none absolute -right-8 -top-8">
                       <ProfessionalWatermark />
                     </div>
@@ -111,31 +120,36 @@ export function ProfessionalsSection() {
                       </div>
                     </div>
 
-                    <Image
-                      src={style.imageSrc}
-                      alt={style.imageAlt}
-                      fill
-                      className="z-10 object-cover"
-                      sizes="(min-width: 1024px) 184px, (min-width: 640px) 45vw, 100vw"
-                      onError={(e) => {
-                        e.currentTarget.style.display = "none";
-                      }}
-                    />
+                    {shouldRenderPhoto ? (
+                      <Image
+                        src={style.imageSrc as string}
+                        alt={style.imageAlt}
+                        fill
+                        className="z-10 object-cover"
+                        sizes="(min-width: 1024px) 184px, (min-width: 640px) 45vw, 100vw"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 z-10 flex items-center justify-center">
+                        <div className="flex h-20 w-20 items-center justify-center rounded-full border border-white/80 bg-white/85 text-xl font-bold tracking-wide text-ink/70 shadow-premium">
+                          {initials}
+                        </div>
+                      </div>
+                    )}
                   </div>
 
-                  <div className="flex h-full flex-col">
-                    <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-ink/10 bg-white/85 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-ink/50">
+                  <div className="flex h-full flex-col max-sm:items-center max-sm:text-center">
+                    <div className="mb-4 inline-flex w-fit items-center gap-2 max-sm:mx-auto rounded-full border border-ink/10 bg-white/85 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-ink/50">
                       <span className="premium-card-icon text-aqua/70">{style.icon}</span>
                       <span>{style.founder}</span>
                     </div>
 
-                    <h3 className="text-balance font-display text-[2.05rem] leading-[1.03] tracking-[-0.018em] text-ink sm:text-[2.18rem]">
+                    <h3 className="text-balance font-display text-[1.85rem] leading-[1.04] tracking-[-0.016em] text-ink sm:text-[2rem]">
                       {prof.name}
                     </h3>
                     <p className="mt-2 text-[15px] font-semibold text-ink/80">{style.specialty}</p>
-                    <p className="mt-5 max-w-[52ch] text-sm leading-relaxed text-ink/65">{style.bio}</p>
+                    <p className="mt-4 max-w-[52ch] text-sm leading-relaxed text-ink/65">{style.bio}</p>
 
-                    <div className="mt-7 flex flex-wrap gap-3">
+                    <div className="mt-5 flex flex-wrap gap-2.5 max-sm:justify-center">
                       {style.chips.map((chip) => (
                         <span
                           key={chip}
@@ -148,7 +162,7 @@ export function ProfessionalsSection() {
                   </div>
                 </div>
 
-                <div className="mt-6 border-t border-ink/5 pt-4 text-[10px] font-medium uppercase tracking-[0.16em] text-ink/45">
+                <div className="mt-4 border-t border-ink/5 pt-3 text-[10px] font-medium uppercase tracking-[0.16em] text-ink/45 max-sm:text-center">
                   Atención personalizada
                 </div>
               </motion.a>
@@ -159,3 +173,5 @@ export function ProfessionalsSection() {
     </section>
   );
 }
+
+

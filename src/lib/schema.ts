@@ -25,3 +25,27 @@ export const appointmentFormSchema = z
   });
 
 export type AppointmentFormInput = z.infer<typeof appointmentFormSchema>;
+
+export const patientFormSchema = z
+  .object({
+    fullName: z.string().min(1, "Nombre obligatorio.").min(2, "Nombre muy corto."),
+    dni: z.string().optional(),
+    phone: z.string().min(1, "Teléfono obligatorio.").min(8, "Teléfono muy corto."),
+    email: z.union([z.literal(""), z.string().email("Email inválido.")]).optional(),
+    birthDate: z.string().optional(),
+    coverageType: z.enum(["particular", "obra_social", "prepaga"]).optional().default("particular"),
+    coverageName: z.string().optional(),
+    affiliateNumber: z.string().optional(),
+    notes: z.string().optional()
+  })
+  .superRefine((data, ctx) => {
+    if (data.coverageType !== "particular" && !data.coverageName?.trim()) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["coverageName"],
+        message: "Indica la obra social o prepaga."
+      });
+    }
+  });
+
+export type PatientFormInput = z.infer<typeof patientFormSchema>;

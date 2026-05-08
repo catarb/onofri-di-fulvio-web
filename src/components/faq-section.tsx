@@ -53,7 +53,7 @@ export function FaqSection() {
             <motion.article
               key={faq.question}
               variants={cardItem}
-              className="glass premium-card rounded-[32px] p-8 lg:p-10 flex flex-col group"
+              className="glass premium-card rounded-[32px] p-8 lg:p-10 flex flex-col group max-sm:items-center max-sm:text-center"
             >
               <div className="mb-6 h-1 w-12 bg-aqua/25 rounded-full group-hover:w-16 group-hover:bg-aqua transition-all duration-300" />
               <h3 className="font-display text-2xl text-ink leading-tight">{faq.question}</h3>
@@ -65,5 +65,7 @@ export function FaqSection() {
     </section>
   );
 }
+
+
 
 

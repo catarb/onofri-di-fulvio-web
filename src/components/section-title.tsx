@@ -10,7 +10,7 @@ export function SectionTitle({
   description,
 }: SectionTitleProps) {
   return (
-    <div className="max-w-2xl">
+    <div className="mx-auto max-w-2xl text-center sm:mx-0 sm:text-left">
       <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-teal/60">
         {eyebrow}
       </p>

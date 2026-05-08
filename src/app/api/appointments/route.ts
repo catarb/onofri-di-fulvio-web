@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { z } from "zod";
 import { appointmentFormSchema } from "@/lib/schema";
 import { createAppointment } from "@/lib/appointments";
 import { buildWhatsappUrl } from "@/lib/whatsapp";
@@ -17,6 +18,17 @@ export async function POST(request: Request) {
       whatsappUrl
     });
   } catch (error) {
+    if (error instanceof z.ZodError) {
+      const firstIssue = error.issues[0];
+      return NextResponse.json(
+        {
+          success: false,
+          message: firstIssue?.message || "Datos inválidos. Revisá el formulario."
+        },
+        { status: 400 }
+      );
+    }
+
     return NextResponse.json(
       {
         success: false,

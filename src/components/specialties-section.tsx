@@ -78,7 +78,7 @@ export function SpecialtiesSection() {
     .filter((specialty): specialty is (typeof specialties)[number] => Boolean(specialty));
 
   return (
-    <section id="especialidades" className="section-space bg-sand/20">
+    <section id="especialidades" className="section-space bg-sand/20 py-12 sm:py-16 lg:py-20">
       <div className="shell">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -92,7 +92,7 @@ export function SpecialtiesSection() {
             description="Combinamos formación continua y tecnología de vanguardia para ofrecerte soluciones precisas en un entorno de máxima seguridad y calma."
           />
 
-          <p className="mt-6 max-w-2xl text-sm leading-relaxed text-ink/55">
+          <p className="mt-5 max-w-2xl text-sm leading-relaxed text-ink/55 max-sm:mx-auto max-sm:text-center">
             Incluye atención especializada para niños, adultos y tratamientos integrales.
           </p>
         </motion.div>
@@ -102,7 +102,7 @@ export function SpecialtiesSection() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.18 }}
           variants={cardsContainer}
-          className="mt-14 grid gap-6 md:grid-cols-2 lg:gap-8 xl:grid-cols-3"
+          className="mt-8 grid gap-4 md:grid-cols-2 lg:mt-10 lg:gap-5 xl:grid-cols-3"
         >
           {orderedSpecialties.map((specialty) => {
             const isPediatric = specialty.slug === "odontopediatria";
@@ -112,7 +112,7 @@ export function SpecialtiesSection() {
                 key={specialty.slug}
                 href="#turno"
                 variants={cardItem}
-                className={`group glass premium-card rounded-[40px] p-8 lg:p-10 flex h-full cursor-pointer flex-col overflow-hidden ${
+                className={`group glass premium-card rounded-[36px] p-5 lg:p-6 flex h-full cursor-pointer flex-col overflow-hidden max-sm:items-center max-sm:text-center ${
                   isPediatric ? "border border-aqua/25 shadow-[0_24px_55px_rgba(95,183,191,0.18)]" : ""
                 }`}
               >
@@ -120,9 +120,9 @@ export function SpecialtiesSection() {
                   {watermarkIcon}
                 </div>
 
-                <div className="relative z-10 mb-10 flex items-start justify-between gap-4">
+                <div className="relative z-10 mb-5 flex w-full items-center justify-between gap-3 max-sm:justify-center max-sm:gap-2">
                   <div
-                    className={`premium-card-icon flex h-14 w-14 items-center justify-center rounded-2xl shadow-sm ${
+                    className={`premium-card-icon flex h-12 w-12 items-center justify-center rounded-2xl shadow-sm ${
                       isPediatric
                         ? "bg-aqua/12 text-aqua"
                         : "bg-white/95 text-ink/70 group-hover:bg-aqua/12 group-hover:text-aqua"
@@ -130,21 +130,21 @@ export function SpecialtiesSection() {
                   >
                     {iconMap[specialty.slug] || <Smile size={26} />}
                   </div>
-                  <span className="ui-chip min-h-8 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.22em]">
+                  <span className="ui-chip min-h-7 px-3 py-1 text-[9px] font-bold uppercase tracking-[0.2em]">
                     {specialty.shortLabel}
                   </span>
                 </div>
 
-                <h3 className="relative z-10 mb-4 font-display text-2xl leading-tight text-ink transition-opacity group-hover:opacity-70">
+                <h3 className="relative z-10 mb-2.5 font-display text-[1.65rem] leading-tight text-ink transition-opacity group-hover:opacity-70">
                   {specialty.name}
                 </h3>
 
-                <p className="relative z-10 mb-10 flex-grow text-sm leading-relaxed text-ink/50">
+                <p className="relative z-10 mb-5 flex-grow text-sm leading-relaxed text-ink/50">
                   {specialty.description}
                 </p>
 
-                <div className="relative z-10 mt-auto flex items-center gap-4 border-t border-ink/5 pt-8">
-                  <div className="premium-card-icon flex h-10 w-10 items-center justify-center rounded-2xl bg-sand/50 text-ink/45 group-hover:text-aqua">
+                <div className="relative z-10 mt-auto flex items-center gap-3 border-t border-ink/5 pt-5 max-sm:justify-center">
+                  <div className="premium-card-icon flex h-9 w-9 items-center justify-center rounded-2xl bg-sand/50 text-ink/45 group-hover:text-aqua">
                     <BadgeCheck size={16} strokeWidth={1.5} />
                   </div>
                   <div className="flex flex-col gap-0.5">
@@ -160,5 +160,7 @@ export function SpecialtiesSection() {
     </section>
   );
 }
+
+
 
 

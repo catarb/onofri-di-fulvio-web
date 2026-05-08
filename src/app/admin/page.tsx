@@ -8,7 +8,15 @@ export default async function AdminPage() {
     redirect("/admin/login");
   }
 
-  const appointments = await getAdminAppointments();
+  const initialData = await getAdminAppointments({ page: 1, pageSize: 20 });
 
-  return <AdminDashboard initialAppointments={appointments} />;
+  return (
+    <AdminDashboard
+      initialAppointments={initialData.data}
+      initialPage={initialData.page}
+      initialPageSize={initialData.pageSize}
+      initialTotal={initialData.total}
+      initialTotalPages={initialData.totalPages}
+    />
+  );
 }

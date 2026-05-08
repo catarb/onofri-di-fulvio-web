@@ -58,7 +58,6 @@ export function AppointmentForm() {
       email: "",
       consultationReason:
         data.message?.trim() ||
-        data.notes?.trim() ||
         "Solicitud de turno desde formulario web.",
       specialtySlug,
       professionalSlug,
@@ -123,26 +122,26 @@ export function AppointmentForm() {
   }
 
   return (
-    <div className="rounded-[40px] border border-white/50 bg-white p-8 shadow-glow sm:p-12">
-      <div className="mb-10">
-        <div className="mb-4 flex items-center gap-2">
+    <div className="rounded-[34px] border border-white/50 bg-white p-5 shadow-glow sm:p-7">
+      <div className="mb-6">
+        <div className="mb-3 flex items-center gap-2">
           <Calendar className="text-teal" size={18} />
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-teal/60">Reserva Online</p>
         </div>
-        <h2 className="font-display text-4xl text-ink">Solicitá tu turno</h2>
-        <p className="mt-4 text-sm leading-relaxed text-ink/50">
+        <h2 className="font-display text-[2rem] text-ink sm:text-[2.2rem]">Solicitá tu turno</h2>
+        <p className="mt-3 text-sm leading-relaxed text-ink/50">
           Completá tus datos y un especialista se contactará con vos en minutos.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <div className="grid gap-6 sm:grid-cols-2">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <div className="grid gap-4 sm:grid-cols-2">
           <Field label="Nombre completo" error={errors.name?.message} icon={<User size={14} strokeWidth={1} />}>
             <input
               {...register("name")}
               type="text"
               placeholder="Ej. Juan Pérez"
-              className="w-full cursor-text rounded-2xl border border-ink/10 bg-soft-gray/50 px-5 py-4 text-sm outline-none transition-all hover:border-aqua/40 focus:border-aqua focus:ring-4 focus:ring-aqua/10"
+              className="w-full cursor-text rounded-2xl border border-ink/10 bg-soft-gray/50 px-5 py-3 text-sm outline-none transition-all hover:border-aqua/40 focus:border-aqua focus:ring-4 focus:ring-aqua/10"
             />
           </Field>
 
@@ -151,17 +150,17 @@ export function AppointmentForm() {
               {...register("phone")}
               type="tel"
               placeholder="Ej. +54 9 11 ..."
-              className="w-full cursor-text rounded-2xl border border-ink/10 bg-soft-gray/50 px-5 py-4 text-sm outline-none transition-all hover:border-aqua/40 focus:border-aqua focus:ring-4 focus:ring-aqua/10"
+              className="w-full cursor-text rounded-2xl border border-ink/10 bg-soft-gray/50 px-5 py-3 text-sm outline-none transition-all hover:border-aqua/40 focus:border-aqua focus:ring-4 focus:ring-aqua/10"
             />
           </Field>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-2">
           <Field label="Especialidad" error={errors.specialty?.message} icon={<Smile size={14} strokeWidth={1} />}>
             <div className="relative">
               <select
                 {...register("specialty")}
-                className="w-full cursor-pointer appearance-none rounded-2xl border border-ink/10 bg-soft-gray/50 px-5 py-4 text-sm outline-none transition-all hover:border-aqua/40 focus:border-aqua focus:ring-4 focus:ring-aqua/10"
+                className="w-full cursor-pointer appearance-none rounded-2xl border border-ink/10 bg-soft-gray/50 px-5 py-3 text-sm outline-none transition-all hover:border-aqua/40 focus:border-aqua focus:ring-4 focus:ring-aqua/10"
               >
                 <option value="">Seleccioná una opción</option>
                 <option value="odontopediatria">Odontopediatría</option>
@@ -178,7 +177,7 @@ export function AppointmentForm() {
             <input
               {...register("insurance")}
               type="text"
-              className="w-full cursor-text rounded-2xl border border-ink/10 bg-soft-gray/50 px-5 py-4 text-sm outline-none transition-all hover:border-aqua/40 focus:border-aqua focus:ring-4 focus:ring-aqua/10"
+              className="w-full cursor-text rounded-2xl border border-ink/10 bg-soft-gray/50 px-5 py-3 text-sm outline-none transition-all hover:border-aqua/40 focus:border-aqua focus:ring-4 focus:ring-aqua/10"
               placeholder="Ej: OSDE"
             />
           </Field>
@@ -188,7 +187,7 @@ export function AppointmentForm() {
           <textarea
             {...register("notes")}
             rows={2}
-            className="w-full cursor-text resize-none rounded-2xl border border-ink/10 bg-white px-5 py-4 shadow-sm outline-none transition-all hover:border-aqua/40 focus:border-aqua focus:ring-4 focus:ring-aqua/10"
+            className="w-full cursor-text resize-none rounded-2xl border border-ink/10 bg-white px-5 py-3 shadow-sm outline-none transition-all hover:border-aqua/40 focus:border-aqua focus:ring-4 focus:ring-aqua/10"
             placeholder="Horarios preferidos, urgencia, comentarios"
           />
         </Field>
@@ -196,7 +195,7 @@ export function AppointmentForm() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="ui-cta group relative mt-4 flex w-full cursor-pointer overflow-hidden bg-ink text-white shadow-premium hover:bg-teal hover:shadow-premium-hover disabled:cursor-not-allowed disabled:opacity-70"
+          className="ui-cta group relative mt-3 flex w-full cursor-pointer overflow-hidden bg-ink text-white shadow-premium hover:bg-teal hover:shadow-premium-hover disabled:cursor-not-allowed disabled:opacity-70"
         >
           {isSubmitting ? (
             <>
